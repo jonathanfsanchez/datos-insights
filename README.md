@@ -4,7 +4,7 @@ This project explores [Django](https://www.djangoproject.com/), the python web f
 
 ## Applications
 
-| Site          | Description |
+| Applications  | Description |
 | ---           | ---         |
 | homepage      | Contains the homepage |
 | datasets      | Contains everything about datasets and their download |
@@ -23,4 +23,7 @@ This project explores [Django](https://www.djangoproject.com/), the python web f
 ## To run
 1. `cd datos-v0b/`
 2. `python manage.py migrate`
-3. `python manage.py runserver`
+3. `python manage.py createsuperuser`
+4. `python manage.py runserver`
+
+**Note**: Any additional `app.models` that are developed need to have their initial migrations generated with this: `python manage.py makemigrations users datasets models`

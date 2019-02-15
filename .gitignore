@@ -2,3 +2,5 @@
 \.idea/
 
 datos/db\.sqlite3
+
+*.pyc

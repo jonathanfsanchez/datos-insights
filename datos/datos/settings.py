@@ -27,6 +27,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Application definition
+AUTH_USER_MODEL = 'users.DatosUser'
+
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -36,7 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
-    'homepage',
+    'users.apps.UsersConfig',
+    'datasets.apps.DatasetsConfig',
+    'models.apps.ModelsConfig',
 ]
 
 MIDDLEWARE = [
