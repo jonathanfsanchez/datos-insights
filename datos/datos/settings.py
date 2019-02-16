@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'datasets.apps.DatasetsConfig',
     'models.apps.ModelsConfig',
+    'reviews.apps.ReviewsConfig',
+    'subscriptions.apps.SubscriptionsConfig',
 ]
 
 MIDDLEWARE = [

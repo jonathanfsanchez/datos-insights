@@ -26,4 +26,6 @@ This project explores [Django](https://www.djangoproject.com/), the python web f
 3. `python manage.py createsuperuser`
 4. `python manage.py runserver`
 
-**Note**: Any additional `app.models` that are developed need to have their initial migrations generated with this: `python manage.py makemigrations users datasets models`
+**Note**: Any additional `app.models` that are developed need to have their initial migrations generated with this:
+
+`python manage.py makemigrations [app_name]`
