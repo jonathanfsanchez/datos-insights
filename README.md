@@ -6,7 +6,6 @@ This project explores [Django](https://www.djangoproject.com/), the python web f
 
 | Applications  | Description |
 | ---           | ---         |
-| homepage      | Contains the homepage |
 | datasets      | Contains everything about datasets and their download |
 | models        | Contains everything about models and their deployment |
 | services      | Contains the services, action items on a datasets or models, that datos and other users provide, as well as those services a user offers |
@@ -21,11 +20,17 @@ This project explores [Django](https://www.djangoproject.com/), the python web f
 **Note**: It is recommended to use a python environment.
 
 ## To run
-1. `cd datos-v0b/`
-2. `python manage.py migrate`
-3. `python manage.py createsuperuser`
-4. `python manage.py runserver`
+1. `cd datos-v0b/datos`
+2. `python manage.py migrate` - create the database tables for django and datos
+3. `python manage.py createsuperuser` - create the admin account
+4. `python manage.py runserver` - runs the local server
+   1. `python manage.py runserver 0:8000` - to have the server be visible to all LOCAL network devices (e.g. iphone)
 
 **Note**: Any additional `app.models` that are developed need to have their initial migrations generated with this:
+1. `python manage.py makemigrations [app_name]`
+2. `python manage.py migrate [app_name]`
 
-`python manage.py makemigrations [app_name]`
+
+---
+
+Visit http://127.0.0.1:8000/admin for the administration site. Use login credentials created in step 3.

@@ -5,31 +5,31 @@
 {% block content %}
     <div class="container">
 
-        <div class="card my-4">
-            <h2 class="card-header border border-success">{{ dataset.title }}</h2>
-            <div class="card-body border border-success">
+        <div class="shadow card my-4">
+            <h2 class="card-header">{{ dataset.title }}</h2>
+            <div class="card-body">
                 <h5 class="card-title"></h5>
                 <p class="card-text">
-                <table class="table table-striped">
+                <table class="table table-borderless">
                     <tbody>
                     <tr>
-                        <th scope="row">Description</th>
+                        <th class="text-right" scope="row">Description</th>
                         <td>{{ dataset.description }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Upload Date</th>
+                        <th class="text-right" scope="row">Upload Date</th>
                         <td>{{ dataset.upload_date|date }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Last Modified Date</th>
-                        <td>{{ dataset.last_modified|date }}</td>
+                        <th class="text-right" scope="row">Last Modified Date</th>
+                        <td >{{ dataset.last_modified|date }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Cost</th>
+                        <th class="text-right" scope="row">Cost</th>
                         <td>{{ dataset.cost }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Owner</th>
+                        <th class="text-right" scope="row">Owner</th>
                         <td>{{ dataset.user.username }}</td>
                     </tr>
                     </tbody>

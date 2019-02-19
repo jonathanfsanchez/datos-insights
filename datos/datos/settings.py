@@ -24,7 +24,7 @@ SECRET_KEY = '&kau9t8+9kqpp=m=-u1o3x#s(1_0p5w$^q_yy9z%=t6v5%l!7z'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 AUTH_USER_MODEL = 'users.DatosUser'
