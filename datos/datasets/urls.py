@@ -1,11 +1,11 @@
 from django.urls import path
 
-from .views import DetailView, IndexView
+from .views import dataset_create, dataset_view, dataset_list, dataset_update
 
 app_name = 'datasets'
 urlpatterns = [
-    # ex /datasets/
-    path('', IndexView.as_view(), name='index'),
-    # ex: /datasets/5/
-    path('<int:pk>/', DetailView.as_view(), name='detail'),
+    path('', dataset_list, name='dataset_list'),
+    path('<int:pk>/', dataset_view, name='dataset_view'),
+    path('new', dataset_create, name='dataset_new'),
+    path('edit/<int:pk>', dataset_update, name='dataset_edit'),
 ]

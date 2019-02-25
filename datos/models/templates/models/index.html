@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h2>models</h2>
+    <ul>
+    {% for m in object_list %}
+        <li><a href="{% url 'models:detail' m.id %}">{{ m.title }} - {{ m.description }}</a></li>
+    {% empty %}
+        <li>No models yet.</li>
+    {% endfor %}
+    </ul>
+{% endblock %}

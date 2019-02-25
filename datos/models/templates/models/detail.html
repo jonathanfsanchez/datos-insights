@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        <div class="shadow card my-4">
+            <h2 class="card-header">{{ model.title }}</h2>
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <p class="card-text">
+                <table class="table table-borderless">
+                    <tbody>
+                    <tr>
+                        <th scope="row">Description</th>
+                        <td>{{ model.description }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Upload Date</th>
+                        <td>{{ model.upload_date|date }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Last Modified Date</th>
+                        <td>{{ model.last_modified|date }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Cost</th>
+                        <td>{{ model.cost }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Owner</th>
+                        <td>{{ model.user.username }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                 <p>
+        {% for mdr in model.datasets.all %}
+            <h2>{{  mdr.title  }}</h2>
+                        {% endfor %}
+            hi
+            </p>
+            Subscriptions - {{ model.modelsubscription_set.count }}
+            Reviews - {{ model.modelreview_set.count }}
+                </p>
+            </div>
+        </div>
+
+
+    </div>
+
+{% endblock %}
+

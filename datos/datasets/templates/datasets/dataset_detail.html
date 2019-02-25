@@ -13,27 +13,35 @@
                 <table class="table table-borderless">
                     <tbody>
                     <tr>
-                        <th class="text-right" scope="row">Description</th>
+                        <th scope="row">Description</th>
                         <td>{{ dataset.description }}</td>
                     </tr>
                     <tr>
-                        <th class="text-right" scope="row">Upload Date</th>
+                        <th scope="row">Upload Date</th>
                         <td>{{ dataset.upload_date|date }}</td>
                     </tr>
                     <tr>
-                        <th class="text-right" scope="row">Last Modified Date</th>
-                        <td >{{ dataset.last_modified|date }}</td>
+                        <th scope="row">Last Modified Date</th>
+                        <td>{{ dataset.last_modified|date }}</td>
                     </tr>
                     <tr>
-                        <th class="text-right" scope="row">Cost</th>
+                        <th scope="row">Cost</th>
                         <td>{{ dataset.cost }}</td>
                     </tr>
                     <tr>
-                        <th class="text-right" scope="row">Owner</th>
+                        <th scope="row">Owner</th>
                         <td>{{ dataset.user.username }}</td>
                     </tr>
                     </tbody>
                 </table>
+            <p>
+        {% for mdr in dataset.models.all %}
+            <h2>{{  mdr.title  }}</h2>
+                        {% endfor %}
+            </p>
+
+
+
                 </p>
             </div>
         </div>
