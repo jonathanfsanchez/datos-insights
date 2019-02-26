@@ -21,7 +21,7 @@ class Dataset(models.Model):
         return "{title} - {owner}".format(title=self.title, owner=self.user)
 
     def get_absolute_url(self):
-        return reverse('dataset_edit', kwargs={'pk': self.pk})
+        return reverse('dataset_view', kwargs={'pk': self.pk})
 
     class Meta:
         db_table = 'datasets'

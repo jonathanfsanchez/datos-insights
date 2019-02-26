@@ -1,11 +1,11 @@
 from django.urls import path
 
-from .views import DetailView, IndexView
+from models.views import model_list, model_view, model_create, model_update
 
 app_name = 'models'
 urlpatterns = [
-    # ex /models/
-    path('', IndexView.as_view(), name='index'),
-    # ex: /models/7
-    path('<int:pk>/', DetailView.as_view(), name='detail'),
+    path('', model_list, name='model_list'),
+    path('<int:pk>/', model_view, name='model_view'),
+    path('new', model_create, name='model_create'),
+    path('edit/<int:pk>', model_update, name='model_update'),
 ]
