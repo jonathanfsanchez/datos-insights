@@ -42,8 +42,12 @@
                 </p>
             </div>
         </div>
-
-
+        {% for r in dataset.datasetreview_set.all %}
+            {% include 'reviews/review_dataset_view_base.html' with dataset_review=r %}
+        {% endfor %}
+        {% for sub in dataset.datasetsubscription_set.all %}
+            {% include 'subscriptions/subscription_dataset_view_base.html' with dataset_subscription=sub %}
+        {% endfor %}
     </div>
 
 {% endblock %}

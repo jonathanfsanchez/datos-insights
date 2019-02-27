@@ -40,11 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
-    'users.apps.UsersConfig',
-    'datasets.apps.DatasetsConfig',
-    'models.apps.ModelsConfig',
-    'reviews.apps.ReviewsConfig',
-    'subscriptions.apps.SubscriptionsConfig',
+    'users',
+    'datasets',
+    'models',
+    'reviews',
+    'subscriptions',
 ]
 
 MIDDLEWARE = [

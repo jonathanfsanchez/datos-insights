@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="shadow card my-4">
+        <h2 class="card-header">Subscribed to - {{ model_subscription.model.title }}</h2>
+        <div class="card-body">
+            <h5 class="card-title"></h5>
+            <p class="card-text">
+            <table class="table table-borderless">
+                <tbody>
+                <tr>
+                    <th scope="row">Active</th>
+                    <td>{{ model_subscription.is_active }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Subscription Date</th>
+                    <td>{{ model_subscription.dataset_subscription }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Type</th>
+                    <td>{{ model_subscription.subscription_type }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">URL</th>
+                    <td>{{ model_subscription.url }}</td>
+                </tr>
+                </tbody>
+            </table>
+            </p>
+        </div>
+    </div>
+</div>
