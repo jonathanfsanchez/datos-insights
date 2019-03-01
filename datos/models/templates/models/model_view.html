@@ -30,7 +30,7 @@
                     </tr>
                     <tr>
                         <th scope="row">Owner</th>
-                        <td>{{ model.user.username }}</td>
+                        <td><a href="{% url 'profile_view' pk=model.user.id %}">{{ model.user.username }}</a></td>
                     </tr>
                     </tbody>
                 </table>

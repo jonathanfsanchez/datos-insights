@@ -8,9 +8,9 @@
     <title>{% block title %}Django Simple Login{% endblock %}</title>
 </head>
 <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-light pt-4">
       <div class="container">
-        <a class="navbar-brand">Datos</a>
+        <a class="navbar-brand" href="{% url 'home' %}">Datos</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -18,9 +18,6 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -29,23 +26,20 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{% url 'datasets:dataset_list' %}">Datasets</a>
                         <a class="dropdown-item" href="{% url 'models:model_list' %}">Models</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-success mr-sm-5" type="submit">Search</button>
+                <button class="btn btn-outline-success mr-sm-5" type="submit">Search</button>
             </form>
-            <form class="form-inline my-2 my-lg-0">
+            <div class=" my-2 my-lg-0">
                 {% if user.is_authenticated %}
-                    <span>Welcome, {{ user.username }}!<a href="{% url 'logout' %}" class="btn btn-primary ml-5">Logout</a></span>
+                    <a>Welcome, {{ user.username }}!<a href="{% url 'logout' %}" class="btn btn-outline-primary ml-5">Logout</a>
                 {% else %}
-                    <a href="{% url 'login' %}" class="btn btn-primary ml-5 mr-sm-2">Login</a>
-                    <a href="{% url 'signup' %}" class="btn btn-primary">Signup</a>
+                    <a href="{% url 'login' %}" class="btn btn-outline-primary ml-5 mr-sm-2">Login</a>
+                    <a href="{% url 'signup' %}" class="btn btn-outline-primary">Signup</a>
                 {% endif %}
-            </form>
+            </div>
         </div>
         </div>
     </nav>
@@ -54,4 +48,10 @@
 {% block content %}
 {% endblock %}
 </body>
+
+  <footer class="pt-4 my-md-5 pt-md-5">
+  <div class="container">
+    <span class="text-muted">Datos &copy; 2019</span>
+  </div>
+</footer>
 </html>

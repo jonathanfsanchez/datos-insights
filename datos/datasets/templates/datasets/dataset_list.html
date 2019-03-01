@@ -3,12 +3,16 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <h2>Datasets</h2>
-    <ul>
-        {% for ds in object_list %}
-            <li><a href="{% url 'datasets:dataset_view' ds.id %}">{{ ds.title }} - {{ ds.description }}</a></li>
-        {% empty %}
-            <li>No datasets yet.</li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <h2>Datasets</h2>
+        <ul class="list-group list-group-flush">
+            {% for ds in object_list %}
+                <li class="list-group-item"><a href="{% url 'datasets:dataset_view' ds.id %}">{{ ds.title }}
+                    - {{ ds.description }}</a></li>
+            {% empty %}
+                <li class="list-group-item">No datasets yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
 {% endblock %}

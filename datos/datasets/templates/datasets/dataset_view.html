@@ -3,14 +3,11 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <div class="container">
-
-        <div class="shadow card my-4">
-            <h2 class="card-header">{{ dataset.title }}</h2>
+    <div class="container mt-5">
+        <div class="card shadow">
+            <h5 class="card-header ">{{ dataset.title }}</h5>
             <div class="card-body">
-                <h5 class="card-title"></h5>
-                <p class="card-text">
-                <table class="table table-borderless">
+                <table class="card-text table table-borderless table-hover">
                     <tbody>
                     <tr>
                         <th scope="row">Description</th>
@@ -18,11 +15,11 @@
                     </tr>
                     <tr>
                         <th scope="row">Upload Date</th>
-                        <td>{{ dataset.upload_date|date }}</td>
+                        <td>{{ dataset.upload_date }}</td>
                     </tr>
                     <tr>
                         <th scope="row">Last Modified Date</th>
-                        <td>{{ dataset.last_modified|date }}</td>
+                        <td>{{ dataset.last_modified }}</td>
                     </tr>
                     <tr>
                         <th scope="row">Cost</th>
@@ -30,16 +27,10 @@
                     </tr>
                     <tr>
                         <th scope="row">Owner</th>
-                        <td>{{ dataset.user.username }}</td>
+                        <td><a href="{% url 'profile_view' pk=dataset.user.id %}">{{ dataset.user.username }}</a></td>
                     </tr>
                     </tbody>
                 </table>
-                <p>
-                    {% for mdr in dataset.models.all %}
-                        <h2>{{ mdr.title }}</h2>
-                    {% endfor %}
-                </p>
-                </p>
             </div>
         </div>
         {% for r in dataset.datasetreview_set.all %}

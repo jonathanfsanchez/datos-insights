@@ -3,12 +3,16 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <h2>models</h2>
-    <ul>
-    {% for m in object_list %}
-        <li><a href="{% url 'models:model_view' m.id %}">{{ m.title }} - {{ m.description }}</a></li>
-    {% empty %}
-        <li>No models yet.</li>
-    {% endfor %}
-    </ul>
+    <div class="container">
+
+        <h2>models</h2>
+        <ul class="list-group list-group-flush">
+            {% for m in object_list %}
+                <li class="list-group-item"><a href="{% url 'models:model_view' m.id %}">{{ m.title }}
+                    - {{ m.description }}</a></li>
+            {% empty %}
+                <li class="list-group-item">No models yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

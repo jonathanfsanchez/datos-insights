@@ -1,34 +1,33 @@
-<div class="container">
-    <div class="shadow card my-4">
-        <h2 class="card-header">{{ dataset_review.title }}</h2>
-        <div class="card-body">
-            <h5 class="card-title"></h5>
-            <p class="card-text">
-            <table class="table table-borderless">
-                <tbody>
-                <tr>
-                    <th scope="row">Description</th>
-                    <td>{{ dataset_review.text }}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Upload Date</th>
-                    <td>{{ dataset_review.original_date }}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Last Modified Date</th>
-                    <td>{{ dataset_review.last_modified }}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Rating</th>
-                    <td>{{ dataset_review.stars }}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Author</th>
-                    <td>{{ dataset_review.author.username }}</td>
-                </tr>
-                </tbody>
-            </table>
-            </p>
-        </div>
+<div class="shadow card my-4">
+    <h5 class="card-header">{{ dataset_review.title }}</h5>
+    <div class="card-body">
+        <table class="card-text table table-borderless">
+            <tbody>
+            <tr>
+                <th scope="row">Description</th>
+                <td>{{ dataset_review.text }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Upload Date</th>
+                <td>{{ dataset_review.original_date }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Last Modified Date</th>
+                <td>{{ dataset_review.last_modified }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Rating</th>
+                <td>{{ dataset_review.stars }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Author</th>
+                <td>
+                    <a href="{% url 'profile_view' pk=dataset_review.author.id %}">
+                        {{ dataset_review.author.username }}
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>

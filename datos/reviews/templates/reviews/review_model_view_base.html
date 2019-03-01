@@ -24,7 +24,11 @@
                 </tr>
                 <tr>
                     <th scope="row">Author</th>
-                    <td>{{ model_review.author.username }}</td>
+                    <td>
+                        <a href="{% url 'profile_view' pk=model_review.author.id %}">
+                            {{ model_review.author.username }}
+                        </a>
+                    </td>
                 </tr>
                 </tbody>
             </table>
