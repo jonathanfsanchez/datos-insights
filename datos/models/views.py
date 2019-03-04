@@ -12,8 +12,13 @@ class DatosModelForm(ModelForm):
 
 
 def model_list(request, template_name='models/model_list.html'):
-    model = Model.objects.all()
-    return render(request, template_name, {'object_list': model})
+    # TODO find a way to do featured/popular models
+    featured = Model.objects.all()[0:3]
+    popular = Model.objects.all()[3:6]
+    context = dict()
+    context['featured'] = featured
+    context['popular'] = popular
+    return render(request, template_name, context=context)
 
 
 def model_view(request, pk, template_name='models/model_view.html'):

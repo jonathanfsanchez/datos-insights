@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="erurn">
+
 <head>
+    <meta charset="UTF-8">
     {% load bootstrap4 %}
     {% bootstrap_css %}
-    {% bootstrap_javascript jquery='full' %}
-    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <title>{% block title %}Django Simple Login{% endblock %}</title>
 </head>
+
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light pt-4">
-      <div class="container">
-        <a class="navbar-brand" href="{% url 'home' %}">Datos</a>
+    <nav class="navbar navbar-expand-lg navbar-light mt-2">
+        <a class="navbar-brand" href="#">Datos</a>
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -18,40 +20,44 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Store
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{% url 'datasets:dataset_list' %}">Datasets</a>
-                        <a class="dropdown-item" href="{% url 'models:model_list' %}">Models</a>
+                <li>
+                    <div class="d-inline-flex align-items-center mr-3" >
+                        <input class="form-control border border-right-0 border-success rounded-0 py-1" type="search" placeholder="Search"
+                               aria-label="Search">
+                        <button class="btn btn-outline-success border-left-0 rounded-0 py-1"
+                                type="submit"><i class="material-icons d-flex">search</i>
+                        </button>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'models:model_list' %}">Models</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'datasets:dataset_list' %}">Datasets</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success mr-sm-5" type="submit">Search</button>
-            </form>
-            <div class=" my-2 my-lg-0">
+
+            <div>
                 {% if user.is_authenticated %}
-                    <a>Welcome, {{ user.username }}!<a href="{% url 'logout' %}" class="btn btn-outline-primary ml-5">Logout</a>
+                    <a>Welcome, {{ user.username }}!</a>
+                    <a href="{% url 'logout' %}" class="btn btn-outline-primary rounded-0 ml-3 py-1">Logout</a>
                 {% else %}
-                    <a href="{% url 'login' %}" class="btn btn-outline-primary ml-5 mr-sm-2">Login</a>
+                    <a href="{% url 'login' %}" class="btn btn-outline-primary">Login</a>
                     <a href="{% url 'signup' %}" class="btn btn-outline-primary">Signup</a>
                 {% endif %}
             </div>
-        </div>
         </div>
     </nav>
 </header>
 <body>
 {% block content %}
 {% endblock %}
+{% bootstrap_javascript jquery='full' %}
 </body>
 
-  <footer class="pt-4 my-md-5 pt-md-5">
-  <div class="container">
-    <span class="text-muted">Datos &copy; 2019</span>
-  </div>
+<footer class="pt-4 my-md-5 pt-md-5">
+    <div class="container text-muted">&copy; 2019 Datos</div>
 </footer>
 </html>

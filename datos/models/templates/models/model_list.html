@@ -1,18 +1,97 @@
 {% extends 'base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Models{% endblock %}
 
 {% block content %}
     <div class="container">
+        <h1 class="mt-4 display-4">Featured Models</h1>
+        <div class="card-deck">
+            {% for m in featured %}
 
-        <h2>models</h2>
-        <ul class="list-group list-group-flush">
-            {% for m in object_list %}
-                <li class="list-group-item"><a href="{% url 'models:model_view' m.id %}">{{ m.title }}
-                    - {{ m.description }}</a></li>
+                <div class="card text-white bg-dark shadow-lg mt-3 mb-5 rounded-0" style="min-width: 18rem;">
+                    <div class="card-header">
+                        <h5 class="mb-0 text-center">{{ m.title }}</h5>
+                    </div>
+
+                    <div class="card-body">
+                        {#                    <h5 class="card-title">Card title</h5>#}
+                        <h6 class="card-subtitle small mb-2"><strong>${{ m.cost|floatformat:"2" }}</strong></h6>
+                        <p class="card-text">{{ m.description }}</p>
+
+                        <h5 class="card-title">
+                            <a href="#" class="badge badge-info">Tag</a>
+                            <a href="#" class="badge badge-info">Tag</a>
+                            <a href="#" class="badge badge-info">Tag</a>
+                        </h5>
+
+                    </div>
+
+                    {#                    stars                    #}
+                    <div class="card-footer d-flex flex-row justify-content-between">
+                        <div class="d-flex align-items-center text-warning">
+                            <i class="material-icons">star</i>
+                            <i class="material-icons">star</i>
+                            <i class="material-icons">star</i>
+                            <i class="material-icons">star</i>
+                            <i class="material-icons">star_border</i>
+                        </div>
+                        <div>
+                            <a class="btn btn-sm text-light px-0 py-0 border-0"
+                               href="{% url 'models:model_view' m.id %}">
+                                <i class="material-icons d-flex">launch</i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
             {% empty %}
-                <li class="list-group-item">No models yet.</li>
+
             {% endfor %}
-        </ul>
+        </div>
+
+        <h1 class="mt-4 display-4">Popular Models</h1>
+        <div class="card-deck">
+            {% for m in popular %}
+
+                <div class="card text-white bg-dark shadow-lg my-3 rounded-0" style="min-width: 18rem;">
+                    <div class="card-header">
+                        <h5 class="mb-0 text-center">{{ m.title }}</h5>
+                    </div>
+
+                    <div class="card-body">
+                        {#                    <h5 class="card-title">Card title</h5>#}
+                        <h6 class="card-subtitle small mb-2"><strong>${{ m.cost|floatformat:"2" }}</strong></h6>
+                        <p class="card-text">{{ m.description }}</p>
+
+                        <h5 class="card-title">
+                            <a href="#" class="badge badge-info">Tag</a>
+                            <a href="#" class="badge badge-info">Tag</a>
+                            <a href="#" class="badge badge-info">Tag</a>
+                        </h5>
+
+                    </div>
+
+                    {#                    stars                    #}
+                    <div class="card-footer d-flex flex-row justify-content-between">
+                        <div class="d-flex align-items-center text-warning">
+                            <i class="material-icons">star</i>
+                            <i class="material-icons">star</i>
+                            <i class="material-icons">star</i>
+                            <i class="material-icons">star</i>
+                            <i class="material-icons">star_border</i>
+                        </div>
+                        <div>
+                            <a class="btn btn-sm text-light px-0 py-0 border-0"
+                               href="{% url 'models:model_view' m.id %}">
+                                <i class="material-icons d-flex">launch</i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            {% empty %}
+
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

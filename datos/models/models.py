@@ -7,6 +7,16 @@ from datasets.models import Dataset
 
 
 class Model(models.Model):
+    # ONNX = "O"
+    # PYTORCH = "PY"
+    # TENSORFLOW = "TF"
+    #
+    # FRAMEWORK_CHOICES = (
+    #     (ONNX, 'ONNX'),
+    #     (PYTORCH, 'Pytorch'),
+    #     (TENSORFLOW, 'Tensorflow')
+    # )
+
     title = models.TextField(blank=False)
     description = models.TextField(blank=True, default='')
     upload_date = models.DateTimeField(editable=False, auto_now_add=True)
@@ -14,9 +24,16 @@ class Model(models.Model):
     is_private = models.BooleanField(default=False)
     cost = models.FloatField(blank=False, default=0.00,
                              validators=[MinValueValidator(0.00), ])
+
+    views = models.PositiveIntegerField(editable=False, default=0)
+    # ml_framework = models.CharField(max_length=2, blank=False, choices=FRAMEWORK_CHOICES)
+
     weights_path = models.TextField()
     user = models.ForeignKey(get_user_model(), models.DO_NOTHING, blank=False)
     datasets = models.ManyToManyField(Dataset, through='ModelDatasetRelations')
+
+    def __str__(self):
+        return "{title} - {owner}".format(title=self.title, owner=self.user)
 
     class Meta:
         db_table = 'models'
