@@ -1,52 +1,165 @@
 {% extends 'base.html' %}
 
+{% load bootstrap4 %}
+
 {% block title %}Home{% endblock %}
 
 {% block content %}
+
     <div class="container">
 
-        <div class="shadow card my-4">
-            <h2 class="card-header">{{ model.title }}</h2>
+        <div class="jumbotron shadow bg-secondary text-white pt-0 pr-3 pb-3">
+            <div class="row justify-content-end">
+                <div class="col-11 pb-0"><h1 class="pt-3 mb-0">{{ model.title }}</h1></div>
+                <div class="col-1 text-right pr-1">
+                    <a class="btn text-white px-0 pb-0 border-0">
+                        <i class="material-icons " style="font-size: 48px">bookmark_border</i>
+                    </a>
+                </div>
+            </div>
+            <div class="d-flex align-items-center text-warning">
+                {{ model.modelreview_set.count }} Reviews |
+                <i class="material-icons">star</i>
+                <i class="material-icons">star</i>
+                <i class="material-icons">star</i>
+                <i class="material-icons">star</i>
+                <i class="material-icons">star_border</i>
+            </div>
+            <div>
+                {% if model.cost > 0 %}
+                    ${{ model.cost|floatformat:"2" }}
+                {% else %}
+                    Free*
+                {% endif %}
+            </div>
+            <div class="col pl-0 pb-0 pt-4">
+                <a href="#" class="badge badge-info">Tag</a>
+                <a href="#" class="badge badge-info">Tag</a>
+                <a href="#" class="badge badge-info">Tag</a>
+            </div>
+
+            <div class="d-flex mt-2 ">
+                <div>
+                    <i class="material-icons pr-1 " style="font-size: 28px">account_box</i>
+                </div>
+                <div class="align-items-center">
+                    <a class="text-white" href="{% url 'profile_view' pk=model.user.id %}">
+                        {{ model.user.username }}
+                    </a>
+                </div>
+
+                <div class="ml-auto">
+                    <button class="btn btn-sm btn-light p-1 d-flex align-items-center">Subscribe
+                        <i class="material-icons ml-2">add_shopping_cart</i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        {#<a class="text-white" href="{% url 'profile_view' pk=model.user.id %}">{{ model.user.username }}</a>#}
+        <div class="card m-4">
+            <div class="card-header">
+                Summary
+            </div>
             <div class="card-body">
-                <h5 class="card-title"></h5>
-                <p class="card-text">
-                <table class="table table-borderless">
-                    <tbody>
-                    <tr>
-                        <th scope="row">Description</th>
-                        <td>{{ model.description }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Upload Date</th>
-                        <td>{{ model.upload_date|date }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Last Modified Date</th>
-                        <td>{{ model.last_modified|date }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Cost</th>
-                        <td>{{ model.cost }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Owner</th>
-                        <td><a href="{% url 'profile_view' pk=model.user.id %}">{{ model.user.username }}</a></td>
-                    </tr>
-                    </tbody>
-                </table>
-                <p>
-                    {% for mdr in model.datasets.all %}
-                        <h2>{{ mdr.title }}</h2>
-                    {% endfor %}
-                </p>
-                Subscriptions - {{ model.modelsubscription_set.count }}
-                Reviews - {{ model.modelreview_set.count }}
-                </p>
+                <div class="row py-3 px-4">
+                    <div class="col-2">Description</div>
+                    <div class="col-10">{{ model.description }}</div>
+                </div>
             </div>
         </div>
 
+        {% if render_subscribers %}
+            <div class="card m-4">
+                <div class="card-header">
+                    <a name="subscribers">Subscribers - Currently Set to Render ALWAYS</a>
+                </div>
+                <div class="card-body">
+                    <div class="row py-3 px-4">
+
+                        {% for sub in subscribers %}
+                            <div class="card mx-4">
+                                <div class="card-body">
+                                    <h5 class="card-title text-dark">{{ sub.get_subscription_type_display }}</h5>
+                                    {{ sub.date_subscribed }}
+                                    <a href="{% url 'profile_view' pk=sub.customer.id %}">{{ sub.customer }}</a>
+                                </div>
+                            </div>
+                        {% empty %}
+                            No Subscribers
+                        {% endfor %}
+
+                        {% if num_sub_pages_list %}
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center mt-3">
+                                    {#                        <li class="page-item disabled">#}
+                                    {#                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>#}
+                                    {#                        </li>#}
+                                    {% for p in num_sub_pages_list %}
+                                        <li class="page-item">
+                                            <a class="page-link"
+                                               href="{% url 'models:model_view' pk=model.id %}?sub_page={{ p }}#subscribers">{{ p }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+
+                                    {#                        <li class="page-item"><a class="page-link" href="#">Next</a></li>#}
+                                </ul>
+                            </nav>
+                        {% endif %}
+
+
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="card m-4">
+            <div class="card-header"><a name="reviews"></a>Reviews</div>
+            <div class="card-body">
+
+                {% for r in reviews %}
+                    <div class="card mx-4">
+                        <div class="card-body">
+
+                            <div class="d-flex align-items-center text-warning"><h5
+                                    class="card-title text-dark">{{ r.title }}</h5>
+                                <i class="material-icons">star</i>
+                                <i class="material-icons">star</i>
+                                <i class="material-icons">star</i>
+                                <i class="material-icons">star</i>
+                                <i class="material-icons">star_border</i>
+                                <a href="{% url 'profile_view' pk=r.author.id %}">{{ r.author.username }}</a>
+                            </div>
+                            <p class="card-text">{{ r.text }}</p>
+                        </div>
+                    </div>
+                {% empty %}
+                    No Reviews
+                {% endfor %}
+
+                {% if num_pages_list %}
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center mt-3">
+                            {#                        <li class="page-item disabled">#}
+                            {#                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>#}
+                            {#                        </li>#}
+                            {% for p in num_pages_list %}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                       href="{% url 'models:model_view' pk=model.id %}?page={{ p }}#reviews">{{ p }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+
+                            {#                        <li class="page-item"><a class="page-link" href="#">Next</a></li>#}
+                        </ul>
+                    </nav>
+                {% endif %}
+            </div>
+        </div>
 
     </div>
 
 {% endblock %}
-

@@ -4,30 +4,28 @@
 
 {% block content %}
     <div class="container">
-        <h1 class="mt-4 display-4">Featured Models</h1>
+        <h1 class="display-4 py-2">Featured Models</h1>
         <div class="card-deck">
             {% for m in featured %}
 
-                <div class="card text-white bg-dark shadow-lg mt-3 mb-5 rounded-0" style="min-width: 18rem;">
+                <div class="card bg-light shadow mb-5" style="min-width: 18rem;">
                     <div class="card-header">
-                        <h5 class="mb-0 text-center">{{ m.title }}</h5>
+                        <h5 class="mb-0">
+                            <a class="text-dark" href="{% url 'models:model_view' m.id %}">{{ m.title }}</a>
+                        </h5>
                     </div>
 
-                    <div class="card-body">
-                        {#                    <h5 class="card-title">Card title</h5>#}
-                        <h6 class="card-subtitle small mb-2"><strong>${{ m.cost|floatformat:"2" }}</strong></h6>
+                    <div class="card-body bg-white">
                         <p class="card-text">{{ m.description }}</p>
-
                         <h5 class="card-title">
                             <a href="#" class="badge badge-info">Tag</a>
                             <a href="#" class="badge badge-info">Tag</a>
                             <a href="#" class="badge badge-info">Tag</a>
                         </h5>
-
                     </div>
 
                     {#                    stars                    #}
-                    <div class="card-footer d-flex flex-row justify-content-between">
+                    <div class="border-0 card-footer bg-white d-inline-flex justify-content-between">
                         <div class="d-flex align-items-center text-warning">
                             <i class="material-icons">star</i>
                             <i class="material-icons">star</i>
@@ -36,10 +34,11 @@
                             <i class="material-icons">star_border</i>
                         </div>
                         <div>
-                            <a class="btn btn-sm text-light px-0 py-0 border-0"
-                               href="{% url 'models:model_view' m.id %}">
-                                <i class="material-icons d-flex">launch</i>
-                            </a>
+                            {% if m.cost > 0 %}
+                                ${{ m.cost|floatformat:"2" }}
+                            {% else %}
+                                Free*
+                            {% endif %}
                         </div>
                     </div>
 
@@ -49,30 +48,28 @@
             {% endfor %}
         </div>
 
-        <h1 class="mt-4 display-4">Popular Models</h1>
+        <h1 class="display-4 py-2">Popular Models</h1>
         <div class="card-deck">
             {% for m in popular %}
 
-                <div class="card text-white bg-dark shadow-lg my-3 rounded-0" style="min-width: 18rem;">
+                <div class="card bg-light shadow mb-5" style="min-width: 18rem;">
                     <div class="card-header">
-                        <h5 class="mb-0 text-center">{{ m.title }}</h5>
+                        <h5 class="mb-0"><a class="text-dark"
+                                            href="{% url 'models:model_view' m.id %}">{{ m.title }}</a></h5>
                     </div>
 
-                    <div class="card-body">
+                    <div class="card-body bg-white">
                         {#                    <h5 class="card-title">Card title</h5>#}
-                        <h6 class="card-subtitle small mb-2"><strong>${{ m.cost|floatformat:"2" }}</strong></h6>
                         <p class="card-text">{{ m.description }}</p>
-
                         <h5 class="card-title">
                             <a href="#" class="badge badge-info">Tag</a>
                             <a href="#" class="badge badge-info">Tag</a>
                             <a href="#" class="badge badge-info">Tag</a>
                         </h5>
-
                     </div>
 
                     {#                    stars                    #}
-                    <div class="card-footer d-flex flex-row justify-content-between">
+                    <div class="border-0 card-footer bg-white d-inline-flex justify-content-between">
                         <div class="d-flex align-items-center text-warning">
                             <i class="material-icons">star</i>
                             <i class="material-icons">star</i>
@@ -81,10 +78,11 @@
                             <i class="material-icons">star_border</i>
                         </div>
                         <div>
-                            <a class="btn btn-sm text-light px-0 py-0 border-0"
-                               href="{% url 'models:model_view' m.id %}">
-                                <i class="material-icons d-flex">launch</i>
-                            </a>
+                            {% if m.cost > 0 %}
+                                ${{ m.cost|floatformat:"2" }}
+                            {% else %}
+                                Free*
+                            {% endif %}
                         </div>
                     </div>
 
