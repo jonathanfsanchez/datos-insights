@@ -27,23 +27,13 @@ def model_view(request, pk, template_name='models/model_view.html'):
     related = Model.objects.all()[0:3]
 
     reviews = model.modelreview_set.all()
-    review_page = Paginator(reviews, 5)
+    review_page = Paginator(reviews, 1)
 
     subscribers = model.modelsubscription_set.all()
-    subscribe_page = Paginator(subscribers, 5)
+    subscribe_page = Paginator(subscribers, 1)
 
     page = request.GET.get('page')
     sub_page = request.GET.get('sub_page')
-
-    num_pages_list = []
-    if review_page.count > 0:
-        for i in range(1, review_page.num_pages+1):
-            num_pages_list.append(i)
-
-    num_sub_pages_list = []
-    if subscribe_page.count > 0:
-        for i in range(1, subscribe_page.num_pages+1):
-            num_pages_list.append(i)
 
     context = dict()
     context['model'] = model
@@ -52,10 +42,16 @@ def model_view(request, pk, template_name='models/model_view.html'):
     context['reviews'] = review_page.get_page(page)
     context['subscribers'] = subscribe_page.get_page(sub_page)
 
-    context['render_subscribers'] = True
+    context['render_subscribers'] = request.user.id == model.user.id
 
-    context['num_pages_list'] = num_pages_list
-    context['num_sub_pages_list'] = num_sub_pages_list
+    context['bookmark_to_render'] = None
+
+    if request.user.is_authenticated:
+        if model.datosuser_set.filter(pk=request.user.id).exists():
+            # is bookmarked
+            context['bookmark_to_render'] = 'bookmark'
+        else:
+            context['bookmark_to_render'] = 'bookmark_border'
 
     return render(request, template_name, context=context)
 

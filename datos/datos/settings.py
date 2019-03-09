@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 AUTH_USER_MODEL = 'users.DatosUser'
 
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 

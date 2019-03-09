@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.forms import ModelForm
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -48,7 +49,7 @@ def review_model_view(request, pk, template_name='reviews/review_model_view.html
     model_review = get_object_or_404(ModelReview, pk=pk)
     return render(request=request, template_name=template_name, context={'model_review': model_review})
 
-
+@login_required
 def review_model_create(request, pk, template_name='reviews/review_model_form.html'):
     form = ModelReviewForm(request.POST or None)
     if form.is_valid():

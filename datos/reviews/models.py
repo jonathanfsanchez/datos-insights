@@ -19,6 +19,7 @@ class ModelReview(models.Model):
     class Meta:
         db_table = 'model_reviews'
         unique_together = ('author', 'model')
+        ordering = ['last_modified']
 
 
 class DatasetReview(models.Model):
@@ -36,6 +37,7 @@ class DatasetReview(models.Model):
     class Meta:
         db_table = 'dataset_reviews'
         unique_together = ('author', 'dataset')
+        ordering = ['last_modified']
 
 
 #TODO review of services, e.g data collection review, data labeling review, training new model, data analysis

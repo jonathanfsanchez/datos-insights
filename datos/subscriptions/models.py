@@ -2,16 +2,26 @@ from django.contrib.auth import get_user_model
 from django.db import models
 
 
+class ModelApiCalls(models.Model):
+    inference_date_start = models.DateTimeField(editable=False, auto_now_add=True)
+    process_time_ms = models.FloatField(blank=False)
+    subscription = models.ForeignKey('subscriptions.ModelSubscription', models.DO_NOTHING, blank=False)
+    # cold start - keep track of api calls that are required re-deployment(?)
+
+    class Meta:
+        db_table = 'model_api_calls'
+
+
 # Create your models here.
 class ModelSubscription(models.Model):
     PER_INFERENCE = "PI"
-    PER_YEAR = "PY"
-    PER_MONTH = "PM"
+    # PER_YEAR = "PY" # Not in scope of MVP
+    # PER_MONTH = "PM" # Not in scope of MVP
 
     SUBSCRIPTION_CHOICES = (
         (PER_INFERENCE, 'Per Inference'),
-        (PER_YEAR, 'Per Year'),
-        (PER_MONTH, 'Per Month')
+        # (PER_YEAR, 'Per Year'), # Not in scope of MVP
+        # (PER_MONTH, 'Per Month') # Not in scope of MVP
     )
 
     subscription_type = models.CharField(max_length=2, choices=SUBSCRIPTION_CHOICES, default=PER_INFERENCE)
@@ -26,6 +36,7 @@ class ModelSubscription(models.Model):
     class Meta:
         db_table = 'model_subscriptions'
         unique_together = ('customer', 'model')
+        ordering = ['date_subscribed']
 
 
 class DatasetSubscription(models.Model):
@@ -49,3 +60,4 @@ class DatasetSubscription(models.Model):
     class Meta:
         db_table = 'dataset_subscriptions'
         unique_together = ('customer', 'dataset')
+        ordering = ['date_subscribed']
