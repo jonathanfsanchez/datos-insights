@@ -2,6 +2,8 @@ from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
+from django.db.models import Count
+
 
 # Create your models here.
 class ModelReview(models.Model):
@@ -15,6 +17,10 @@ class ModelReview(models.Model):
     model = models.ForeignKey('models.Model', models.DO_NOTHING)
 
     # model_review_category = models.ForeignKey('ModelReviewCategory', models.DO_NOTHING)
+
+    def get_user_api_calls(self):
+        return self.model.modelsubscription_set.filter(customer=self.author).aggregate(Count('modelapicall')).get(
+            'modelapicall__count')
 
     class Meta:
         db_table = 'model_reviews'
@@ -39,8 +45,7 @@ class DatasetReview(models.Model):
         unique_together = ('author', 'dataset')
         ordering = ['last_modified']
 
-
-#TODO review of services, e.g data collection review, data labeling review, training new model, data analysis
+# TODO review of services, e.g data collection review, data labeling review, training new model, data analysis
 # class ServiceReview(models.Model):
 #     title = models.TextField(blank=False)
 #     text = models.TextField(blank=True, default="")

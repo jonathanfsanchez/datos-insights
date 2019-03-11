@@ -1,11 +1,12 @@
 from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator
 from django.db import models
+from django.db.models import Avg, Count
 
-# Create your models here.
 from datasets.models import Dataset
 
 
+# Create your models here.
 class Model(models.Model):
     # ONNX = "O"
     # PYTORCH = "PY"
@@ -34,6 +35,18 @@ class Model(models.Model):
 
     def __str__(self):
         return "{title} - {owner}".format(title=self.title, owner=self.user)
+
+    def get_avg_stars(self):
+        if self.modelreview_set.exists():
+            return round(self.modelreview_set.aggregate(Avg('stars')).get('stars__avg') * 2) / 2
+        else:
+            return None
+
+    def get_total_reviews(self):
+        return self.modelreview_set.count()
+
+    def get_total_api_calls(self):
+        return self.modelsubscription_set.aggregate(Count('modelapicall')).get('modelapicall__count')
 
     class Meta:
         db_table = 'models'

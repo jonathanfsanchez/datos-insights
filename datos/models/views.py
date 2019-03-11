@@ -1,8 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.forms import ModelForm
 from django.shortcuts import render, get_object_or_404, redirect
 
 from models.models import Model
+from users.models import DatosUser
 
 
 # Create your views here.
@@ -27,7 +29,7 @@ def model_view(request, pk, template_name='models/model_view.html'):
     related = Model.objects.all()[0:3]
 
     reviews = model.modelreview_set.all()
-    review_page = Paginator(reviews, 1)
+    review_page = Paginator(reviews, 5)
 
     subscribers = model.modelsubscription_set.all()
     subscribe_page = Paginator(subscribers, 1)
@@ -71,3 +73,14 @@ def model_update(request, pk, template_name='models/model_form.html'):
         new_model = form.save()
         return redirect('models:model_view', pk=new_model.pk)
     return render(request, template_name, {'form': form})
+
+
+@login_required
+def bookmark_model(request, pk):
+    model = Model.objects.get(pk=pk)
+    if model.datosuser_set.filter(pk=request.user.id).exists():
+        model.datosuser_set.remove(DatosUser.objects.get(pk=request.user.id))
+    else:
+        model.datosuser_set.add(DatosUser.objects.get(pk=request.user.id))
+
+    return redirect('models:model_view', pk=pk)

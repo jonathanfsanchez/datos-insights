@@ -1,34 +1,34 @@
 {% extends 'base.html' %}
 
 {% load bootstrap4 %}
+{% load rating_stars %}
 
-{% block title %}Home{% endblock %}
+{% block title %}{{ model.title }}{% endblock %}
 
 {% block content %}
 
     <div class="container">
+
 
         <div class="jumbotron shadow bg-secondary text-white pt-0 pr-0 pb-3">
             <div class="d-flex">
                 <div class=""><h1 class="pt-3 mb-0">{{ model.title }}</h1></div>
                 {% if bookmark_to_render is not None %}
                     <div class="ml-auto ">
-                        <button class="btn btn-sm bg-secondary text-white">
-                            <i class="material-icons" style="font-size: 54px">{{ bookmark_to_render }}</i>
-                        </button>
+                        <a href="{% url 'models:bookmark_model' model.id %}">
+                            <button class="btn btn-sm bg-secondary text-white">
+                                <i class="material-icons" style="font-size: 54px">{{ bookmark_to_render }}</i>
+                            </button>
+                        </a>
                     </div>
                 {% endif %}
             </div>
 
-            <div class="d-flex align-items-center text-warning mb-1">
-                <i class="material-icons">star</i>
-                <i class="material-icons">star</i>
-                <i class="material-icons">star</i>
-                <i class="material-icons">star</i>
-                <i class="material-icons">star_border</i>
-                <a href="#reviews" class="small text-white text-decoration-none ml-2">
+            <div class="d-flex align-items-center mb-1">
+                {% get_ratings rating=model.get_avg_stars %}
+                <a href="#reviews" class="small text-white text-decoration-none mx-2">
                     {{ model.modelreview_set.count }} Review{{ model.modelreview_set.count|pluralize }}
-                </a>
+                </a>|<small class="ml-2">{{ model.get_total_api_calls }} API Calls</small>
             </div>
 
             <div>
@@ -101,7 +101,8 @@
                                     {# Pagination previous #}
                                     {% if subscribers.has_previous %}
                                         <li class="page-item">
-                                            <a class="page-link" href="?page={{ request.GET.page }}&sub_page={{ subscribers.previous_page_number }}#subscribers">
+                                            <a class="page-link"
+                                               href="?page={{ request.GET.page }}&sub_page={{ subscribers.previous_page_number }}#subscribers">
                                                 Previous
                                             </a>
                                         </li>
@@ -151,12 +152,10 @@
             <div class="card-header bg-secondary text-white">
                 <div class="d-flex justify-content-between align-items-center">
                     <a name="reviews">Reviews</a>
-                    <a class="btn btn-sm btn-light d-flex align-items-center shadow-sm text-dark" data-toggle="modal" data-target="#exampleModalCenter">
-                        Add a Review Modal
-                        <i class="material-icons ml-2">rate_review</i>
-                    </a>
 
-                 <a href="{% url 'reviews:review_model_create' pk=model.id  %}" class="btn btn-sm btn-light d-flex align-items-center shadow-sm">
+
+                    <a href="{% url 'reviews:review_model_create' pk=model.id %}"
+                       class="btn btn-sm btn-light d-flex align-items-center shadow-sm">
                         Add a Review Redirect
                         <i class="material-icons ml-2">rate_review</i>
                     </a>
@@ -169,39 +168,23 @@
                         <div class="list-group-item list-group-item-action">
                             <div class="d-flex">
                                 <a href="{% url 'profile_view' pk=r.author.id %}">{{ r.author.username }}</a>
-                                <small class="font-weight-light text-muted ml-2">Verified User: 194 API Calls</small>
+                                {% if r.get_user_api_calls > 0 %}
+                                    <small class="font-weight-light text-muted ml-2">Verified
+                                        Subscriber: {{ r.get_user_api_calls }} API Calls
+                                    </small>
+                                {% endif %}
                                 <small class="text-muted ml-auto">Last Edit: {{ r.last_modified|timesince }}</small>
                             </div>
 
+
                             <div class="d-flex align-items-center text-warning">
-                                <i class="material-icons" style="font-size: 18px ">star</i>
-                                <i class="material-icons" style="font-size: 18px ">star</i>
-                                <i class="material-icons" style="font-size: 18px ">star</i>
-                                <i class="material-icons" style="font-size: 18px ">star</i>
-                                <i class="material-icons" style="font-size: 18px ">star_border</i>
+                                {% get_ratings rating=r.stars font_size=18 %}
                                 <a href="{% url 'reviews:review_model_view' pk=r.id %}"
-                                   class="d-flex ml-2 text-dark font-weight-bold">{{ r.title }}</a></h5>
+                                   class="d-flex ml-2 text-dark font-weight-bold">{{ r.title }}</a>
                             </div>
                             <p class="mb-1">{{ r.text }}</p>
 
                         </div>
-
-
-                        {#                    <div class="card mx-4">#}
-                        {#                        <div class="card-body">#}
-                        {##}
-                        {#                            <div class="d-flex align-items-center text-warning"><h5#}
-                        {#                                    class="card-title text-dark">{{ r.title }}</h5>#}
-                        {#                                <i class="material-icons">star</i>#}
-                        {#                                <i class="material-icons">star</i>#}
-                        {#                                <i class="material-icons">star</i>#}
-                        {#                                <i class="material-icons">star</i>#}
-                        {#                                <i class="material-icons">star_border</i>#}
-                        {#                                <a href="{% url 'profile_view' pk=r.author.id %}">{{ r.author.username }}</a>#}
-                        {#                            </div>#}
-                        {#                            <p class="card-text">{{ r.text }}</p>#}
-                        {#                        </div>#}
-                        {#                    </div>#}
                     {% empty %}
                         No Reviews
                     {% endfor %}

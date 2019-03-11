@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load rating_stars %}
+
 {% block title %}Models{% endblock %}
 
 {% block content %}
@@ -26,12 +28,8 @@
 
                     {#                    stars                    #}
                     <div class="border-0 card-footer bg-white d-inline-flex justify-content-between">
-                        <div class="d-flex align-items-center text-warning">
-                            <i class="material-icons">star</i>
-                            <i class="material-icons">star</i>
-                            <i class="material-icons">star</i>
-                            <i class="material-icons">star</i>
-                            <i class="material-icons">star_border</i>
+                        <div class="d-flex align-items-center">
+                            {% get_ratings rating=m.get_avg_stars %}
                         </div>
                         <div>
                             {% if m.cost > 0 %}
@@ -70,12 +68,8 @@
 
                     {#                    stars                    #}
                     <div class="border-0 card-footer bg-white d-inline-flex justify-content-between">
-                        <div class="d-flex align-items-center text-warning">
-                            <i class="material-icons">star</i>
-                            <i class="material-icons">star</i>
-                            <i class="material-icons">star</i>
-                            <i class="material-icons">star</i>
-                            <i class="material-icons">star_border</i>
+                        <div class="d-flex align-items-center">
+                            {% get_ratings rating=m.get_avg_stars  %}
                         </div>
                         <div>
                             {% if m.cost > 0 %}
