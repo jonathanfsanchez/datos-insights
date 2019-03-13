@@ -1,0 +1,50 @@
+<form method="post" action="{% url 'subscriptions:subscription_model_create' model.id %}">{% csrf_token %}
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Subscription</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true"></span>
+            </button>
+        </div>
+        <div class="modal-body">
+
+            <div class="card-deck w-50 mb-3 text-center">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Free</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            A subscription allows your account to have access to Model: {{ model.title }} via our DatosInsights API Client.
+                            There is no fee associated with a subscription itself, only when a call is made from our
+                            DatosInsights API Client do you incur processing charges.
+                            Consider it a second-layer of protection on your account - you're welcome. If you are not subscribed, any requests that come in through
+                             DatosInsights API Client will be rejected regardless if the auth-key is valid. You must be subscribed.
+
+                        </p>
+                                                    <small>Also, our lawyers say we need this: Terms and Conditions</small>
+
+                        <h1 class="card-title pricing-card-title">$0
+                            <small class="text-muted">/ mo</small>
+                        </h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>10 users included</li>
+                            <li>2 GB of storage</li>
+                            <li>Email support</li>
+                            <li>Help center access</li>
+                        </ul>
+                        <button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Accept</button>
+        </div>
+    </div>
+</form>
+
+
+

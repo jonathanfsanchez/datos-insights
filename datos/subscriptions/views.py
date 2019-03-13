@@ -1,6 +1,19 @@
-from django.shortcuts import render, get_object_or_404
+from datetime import datetime
 
+from django.contrib.auth.decorators import login_required
+from django.forms import ModelForm
+from django.shortcuts import render, get_object_or_404, redirect
+from django.utils import timezone
+
+from models.models import Model
+from users.models import DatosUser
 from .models import DatasetSubscription, ModelSubscription
+
+
+class ModelSubForm(ModelForm):
+    class Meta:
+        model = ModelSubscription
+        fields = []
 
 
 # Create your views here.
@@ -33,15 +46,40 @@ def subscription_model_view(request, pk, template_name='subscriptions/subscripti
     model_subscription = get_object_or_404(ModelSubscription, pk=pk)
     return render(request=request, template_name=template_name, context={'model_subscription': model_subscription})
 
-# def subscription_model_create(request, pk, template_name='reviews/subscription_model_form.html'):
-#     form = ModelReviewForm(request.POST or None)
-#     if form.is_valid():
-#         if request.user.is_authenticated:
-#             form.instance.author = request.user
-#             form.instance.dataset.id = Model.objects.get(pk=pk)
-#             form.save()
-#             return redirect('models:model_view', pk=pk)
-#     return render(request, template_name, {'form': form})
+
+@login_required
+def subscription_model_create(request, pk):
+    if request.POST:
+        # check to see if there is an existing subscription for this model already
+        if not Model.objects.get(pk=pk).modelsubscription_set.filter(
+                customer=request.user.id).filter(date_unsubscribed__isnull=True).exists():
+            subscription = ModelSubscription()
+            subscription.customer = DatosUser.objects.get(pk=request.user.id)
+            subscription.model = Model.objects.get(pk=pk)
+            subscription.save()
+
+        else:
+            # already subscribed, skip - should be calling update to unsubscribe
+            pass
+
+    return redirect('models:model_view', pk=pk)
+
+
+@login_required
+def subscription_model_update(request, pk):
+    if request.POST:
+        if Model.objects.get(pk=pk).modelsubscription_set.filter(
+                customer=request.user.id).filter(date_unsubscribed__isnull=True).exists():
+
+            model_sub = ModelSubscription.objects.filter(model=pk).filter(customer=request.user.id).filter(
+                date_unsubscribed__isnull=True)
+
+            assert len(model_sub) == 1
+
+            model_sub[0].date_unsubscribed = datetime.now(tz=timezone.utc)
+            model_sub[0].save()
+
+    return redirect('models:model_view', pk=pk)
 #
 #
 # def subscription_model_update(request, pk, template_name='reviews/subscription_model_form.html'):

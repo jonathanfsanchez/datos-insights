@@ -13,13 +13,13 @@
         <div class="jumbotron shadow bg-secondary text-white pt-0 pr-0 pb-3">
             <div class="d-flex">
                 <div class=""><h1 class="pt-3 mb-0">{{ model.title }}</h1></div>
-                {% if bookmark_to_render is not None %}
-                    <div class="ml-auto ">
-                        <a href="{% url 'models:bookmark_model' model.id %}">
-                            <button class="btn btn-sm bg-secondary text-white">
+                {% if bookmark_to_render %}
+                    <div class="ml-auto">
+                        <form action="{% url 'models:bookmark_model' model.id %}" method="post">{% csrf_token %}
+                            <button type=submit class="btn btn-sm bg-secondary text-white">
                                 <i class="material-icons" style="font-size: 54px">{{ bookmark_to_render }}</i>
                             </button>
-                        </a>
+                        </form>
                     </div>
                 {% endif %}
             </div>
@@ -28,7 +28,8 @@
                 {% get_ratings rating=model.get_avg_stars %}
                 <a href="#reviews" class="small text-white text-decoration-none mx-2">
                     {{ model.modelreview_set.count }} Review{{ model.modelreview_set.count|pluralize }}
-                </a>|<small class="ml-2">{{ model.get_total_api_calls }} API Calls</small>
+                </a>|
+                <small class="ml-2">{{ model.get_total_api_calls }} API Calls</small>
             </div>
 
             <div>
@@ -56,8 +57,9 @@
                 </div>
 
                 <div class="ml-auto">
-                    <button class="btn btn-sm btn-light d-flex align-items-center mx-3 shadow-sm">Subscribe
-                        <i class="material-icons ml-2">add_shopping_cart</i>
+                    <button type="button" data-toggle="modal" data-target=".bd-example-modal-lg"
+                            class="btn btn-sm btn-light text-dark d-flex align-items-center mx-3 shadow-sm">{{ sub_btn_text }}
+                        <i class="material-icons ml-2">{{ subscription_to_render }}</i>
                     </button>
                 </div>
             </div>
@@ -74,7 +76,7 @@
             </div>
         </div>
 
-        {% if render_subscribers %}
+        {% if request.user.id == model.user.id %}
             <div class="card m-4 shadow-sm">
                 <div class="card-header bg-secondary text-white">
                     <a name="subscribers">Subscribers</a>
@@ -156,7 +158,7 @@
 
                     <a href="{% url 'reviews:review_model_create' pk=model.id %}"
                        class="btn btn-sm btn-light d-flex align-items-center shadow-sm">
-                        Add a Review Redirect
+                        Add a Review
                         <i class="material-icons ml-2">rate_review</i>
                     </a>
                 </div>
@@ -242,29 +244,10 @@
     </div>
 
     <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
----      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            {% include subscribe_page %}
+        </div>
     </div>
-  </div>
-</div>
 {% endblock %}
-
-
-{#<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">#}
-{#      <div class="modal-dialog" role="document">#}
-{##}
-{#      </div>#}
-{#</div>#}

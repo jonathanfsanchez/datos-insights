@@ -42,11 +42,9 @@ def model_view(request, pk, template_name='models/model_view.html'):
     context['related'] = related
 
     context['reviews'] = review_page.get_page(page)
-    context['subscribers'] = subscribe_page.get_page(sub_page)
 
-    context['render_subscribers'] = request.user.id == model.user.id
-
-    context['bookmark_to_render'] = None
+    if request.user.id == model.user.id:
+        context['subscribers'] = subscribe_page.get_page(sub_page)
 
     if request.user.is_authenticated:
         if model.datosuser_set.filter(pk=request.user.id).exists():
@@ -54,6 +52,15 @@ def model_view(request, pk, template_name='models/model_view.html'):
             context['bookmark_to_render'] = 'bookmark'
         else:
             context['bookmark_to_render'] = 'bookmark_border'
+
+    if subscribers.filter(customer=request.user.id).filter(date_unsubscribed__isnull=True).exists():
+        context['subscribe_page'] = 'subscriptions/unsubscribe_model_form.html'
+        context['subscription_to_render'] = "remove_shopping_cart"
+        context['sub_btn_text'] = "Unsubscribe"
+    else:
+        context['subscribe_page'] = 'subscriptions/subscription_model_form.html'
+        context['subscription_to_render'] = "add_shopping_cart"
+        context['sub_btn_text'] = "Subscribe"
 
     return render(request, template_name, context=context)
 
@@ -77,10 +84,11 @@ def model_update(request, pk, template_name='models/model_form.html'):
 
 @login_required
 def bookmark_model(request, pk):
-    model = Model.objects.get(pk=pk)
-    if model.datosuser_set.filter(pk=request.user.id).exists():
-        model.datosuser_set.remove(DatosUser.objects.get(pk=request.user.id))
-    else:
-        model.datosuser_set.add(DatosUser.objects.get(pk=request.user.id))
+    if request.POST:
+        model = Model.objects.get(pk=pk)
+        if model.datosuser_set.filter(pk=request.user.id).exists():
+            model.datosuser_set.remove(DatosUser.objects.get(pk=request.user.id))
+        else:
+            model.datosuser_set.add(DatosUser.objects.get(pk=request.user.id))
 
     return redirect('models:model_view', pk=pk)

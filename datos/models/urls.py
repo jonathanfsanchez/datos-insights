@@ -8,5 +8,5 @@ urlpatterns = [
     path('<int:pk>/', model_view, name='model_view'),
     path('new', model_create, name='model_create'),
     path('edit/<int:pk>', model_update, name='model_update'),
-    path('<int:pk>/bookmark', bookmark_model, name='bookmark_model'),
+    path('<int:pk>/bookmark/', bookmark_model, name='bookmark_model'),
 ]
