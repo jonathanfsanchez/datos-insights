@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}My Subscription History{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        <div class="card m-4 shadow-sm">
+            <div class="card-header bg-secondary text-white">
+                Models
+            </div>
+            <div class="card-body">
+                {% for sub in model_subs %}
+                    <div class="card mx-4">
+                        <div class="card-body">
+                            <h5 class="card-title text-dark">{{ sub.get_subscription_type_display }} - {{ sub.api_calls }} API Calls</h5>
+                            {{ sub.date_subscribed }}
+                            <a href="{% url 'models:model_view' sub.model.id %}">{{ sub.model.title }}</a>
+                        </div>
+                    </div>
+                {% empty %}
+                    No Subscribers
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="card m-4 shadow-sm">
+            <div class="card-header bg-secondary text-white">
+                Datasets
+            </div>
+            <div class="card-body">
+                {% for sub in dataset_subs %}
+                    <div class="card mx-4">
+                        <div class="card-body">
+                            <h5 class="card-title text-dark">{{ sub.get_subscription_type_display }}</h5>
+                            {{ sub.date_subscribed }}
+
+                        </div>
+                    </div>
+                {% empty %}
+                    No Subscribers
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

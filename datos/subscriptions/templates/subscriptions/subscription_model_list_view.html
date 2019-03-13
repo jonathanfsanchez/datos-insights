@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% load model_banner %}
+
+{% block title %}My Subscriptions - {{ model.title }} - DatosInsights.com{% endblock title %}
+
+
+{% block content %}
+    <div class="container">
+        {% display_full_banner model_id=model.id %}
+
+        <div class="card m-4 shadow-sm">
+            <div class="card-header bg-secondary text-white">
+                Subscribers
+            </div>
+            <div class="card-body">
+                <div class="row py-3 px-4">
+
+                    {% for sub in subs %}
+                        <div class="card mx-4">
+                            <div class="card-body">
+                                <h5 class="card-title text-dark">{{ sub.get_subscription_type_display }}</h5>
+                                {{ sub.date_subscribed }}
+                                <a href="{% url 'profile_view' pk=sub.customer.id %}">{{ sub.customer }}</a>
+                            </div>
+                        </div>
+                    {% empty %}
+                        No Subscribers
+                    {% endfor %}
+
+
+                    {% if subs.paginator.num_pages > 1 %}
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center mt-3">
+                                Pagination previous
+                                {% if subs.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                           href="?page={{ request.GET.page }}">
+                                            Previous
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <span class="page-link" tabindex="-1" aria-disabled="true">Previous</span>
+                                    </li>
+                                {% endif %}
+
+                                Pagination iteration
+                                {% for p in subs.paginator.page_range %}
+                                    {% if p == subs.number %}
+                                        <li class="page-item active" aria-current="page">
+                                                        <span class="page-link">{{ p }}<span
+                                                                class="sr-only">(current)</span></span>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item">
+                                            <a class="page-link"
+                                               href="?page={{ request.GET.page }}">{{ p }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+
+                                Pagination Next
+                                {% if subs.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                           href="?page={{ request.GET.page }}">Previous</a>
+                                        {% else %}
+                                    <li class="page-item disabled">
+                                        <span class="page-link" tabindex="-1" aria-disabled="true">Next</span>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    {% endif %}
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

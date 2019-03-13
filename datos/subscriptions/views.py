@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.forms import ModelForm
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
@@ -14,6 +15,18 @@ class ModelSubForm(ModelForm):
     class Meta:
         model = ModelSubscription
         fields = []
+
+
+@login_required
+def subscription_list_view(request, template_name='subscriptions/subscription_list_view.html'):
+    model = ModelSubscription.objects.filter(customer=request.user.id)
+    dataset = DatasetSubscription.objects.filter(customer=request.user.id)
+
+    context = dict()
+    context['model_subs'] = model
+    context['dataset_subs'] = dataset
+
+    return render(request=request, template_name=template_name, context=context)
 
 
 # Create your views here.
@@ -40,6 +53,24 @@ def subscription_dataset_view(request, pk, template_name='subscriptions/subscrip
 #         form.save()
 #         return redirect('datasets:dataset_view', pk=pk)
 #     return render(request, template_name, {'form': form})
+@login_required
+def subscription_model_list_view(request, pk, template_name='subscriptions/subscription_model_list_view.html'):
+    model = get_object_or_404(Model, pk=pk)
+
+    page = request.GET.get('page')
+    context = dict()
+
+    subs = model.modelsubscription_set.filter(customer=request.user)
+
+    if request.user == model.user:
+        subs = model.modelsubscription_set.all()
+
+    sub_page = Paginator(subs, 10)
+
+    context['subs'] = sub_page.get_page(page)
+    context['model'] = model
+
+    return render(request=request, template_name=template_name, context=context)
 
 
 def subscription_model_view(request, pk, template_name='subscriptions/subscription_model_view.html'):
@@ -70,7 +101,6 @@ def subscription_model_update(request, pk):
     if request.POST:
         if Model.objects.get(pk=pk).modelsubscription_set.filter(
                 customer=request.user.id).filter(date_unsubscribed__isnull=True).exists():
-
             model_sub = ModelSubscription.objects.filter(model=pk).filter(customer=request.user.id).filter(
                 date_unsubscribed__isnull=True)
 

@@ -40,12 +40,18 @@ class ModelSubscription(models.Model):
     customer = models.ForeignKey(get_user_model(), models.DO_NOTHING, blank=False)
     model = models.ForeignKey('models.Model', models.DO_NOTHING, blank=False)
 
+    def api_calls(self):
+        return self.modelapicall_set.count()
+
+    def is_active(self):
+        return self.date_unsubscribed is None
+
     def __str__(self):
         return "{} - {}".format(self.customer, self.model.title)
 
     class Meta:
         db_table = 'model_subscriptions'
-        ordering = ['date_subscribed']
+        ordering = ['-date_subscribed']
 
 
 class DatasetSubscription(models.Model):
@@ -67,4 +73,4 @@ class DatasetSubscription(models.Model):
 
     class Meta:
         db_table = 'dataset_subscriptions'
-        ordering = ['date_subscribed']
+        ordering = ['-date_subscribed']

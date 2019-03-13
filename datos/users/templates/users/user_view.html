@@ -5,6 +5,8 @@
 {% block content %}
 
     <div class="container">
+        <a href="{% url 'subscriptions:subscription_list_view' %}" class="btn btn-primary">View my subscriptions</a>
+
         <div class="shadow card my-4">
             <h2 class="card-header">{{ profile.username }}</h2>
             <div class="card-body">

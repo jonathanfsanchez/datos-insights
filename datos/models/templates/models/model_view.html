@@ -2,69 +2,14 @@
 
 {% load bootstrap4 %}
 {% load rating_stars %}
+{% load model_banner %}
 
-{% block title %}{{ model.title }}{% endblock %}
+{% block title %}Model - {{ model.title }} - DatosInsights.com{% endblock %}
 
 {% block content %}
 
     <div class="container">
-
-
-        <div class="jumbotron shadow bg-secondary text-white pt-0 pr-0 pb-3">
-            <div class="d-flex">
-                <div class=""><h1 class="pt-3 mb-0">{{ model.title }}</h1></div>
-                {% if bookmark_to_render %}
-                    <div class="ml-auto">
-                        <form action="{% url 'models:bookmark_model' model.id %}" method="post">{% csrf_token %}
-                            <button type=submit class="btn btn-sm bg-secondary text-white">
-                                <i class="material-icons" style="font-size: 54px">{{ bookmark_to_render }}</i>
-                            </button>
-                        </form>
-                    </div>
-                {% endif %}
-            </div>
-
-            <div class="d-flex align-items-center mb-1">
-                {% get_ratings rating=model.get_avg_stars %}
-                <a href="#reviews" class="small text-white text-decoration-none mx-2">
-                    {{ model.modelreview_set.count }} Review{{ model.modelreview_set.count|pluralize }}
-                </a>|
-                <small class="ml-2">{{ model.get_total_api_calls }} API Calls</small>
-            </div>
-
-            <div>
-                {% if model.cost > 0 %}
-                    ${{ model.cost|floatformat:"2" }}
-                {% else %}
-                    Free*
-                {% endif %}
-            </div>
-
-            <div class="col pl-0 pb-0 mt-4">
-                <a href="#" class="badge badge-info">Tag</a>
-                <a href="#" class="badge badge-info">Tag</a>
-                <a href="#" class="badge badge-info">Tag</a>
-            </div>
-
-            <div class="d-flex align-items-center mt-1">
-                <div class="d-flex ">
-                    <i class="material-icons pr-1 ">account_box</i>
-                </div>
-                <div class="">
-                    <a class="text-white" href="{% url 'profile_view' pk=model.user.id %}">
-                        {{ model.user.username }}
-                    </a>
-                </div>
-
-                <div class="ml-auto">
-                    <button type="button" data-toggle="modal" data-target=".bd-example-modal-lg"
-                            class="btn btn-sm btn-light text-dark d-flex align-items-center mx-3 shadow-sm">{{ sub_btn_text }}
-                        <i class="material-icons ml-2">{{ subscription_to_render }}</i>
-                    </button>
-                </div>
-            </div>
-
-        </div>
+        {% display_full_banner model_id=model.id %}
 
         {#<a class="text-white" href="{% url 'profile_view' pk=model.user.id %}">{{ model.user.username }}</a>#}
         <div class="card m-4 shadow-sm">
@@ -72,83 +17,15 @@
                 Summary
             </div>
             <div class="card-body">
-                <p>{{ model.description }}</p>
+                {{ model.description }}
+            </div>
+            <div class="card-footer text-muted small py-2">
+                You have made 94 calls to this API - avg response 45ms
+                <a href="{% url 'subscriptions:subscription_model_list_view' model.id %}">
+                    <button class="btn btn-sm btn-outline-primary ml-2 py-0">Subscription Details</button>
+                </a>
             </div>
         </div>
-
-        {% if request.user.id == model.user.id %}
-            <div class="card m-4 shadow-sm">
-                <div class="card-header bg-secondary text-white">
-                    <a name="subscribers">Subscribers</a>
-                </div>
-                <div class="card-body">
-                    <div class="row py-3 px-4">
-
-                        {% for sub in subscribers %}
-                            <div class="card mx-4">
-                                <div class="card-body">
-                                    <h5 class="card-title text-dark">{{ sub.get_subscription_type_display }}</h5>
-                                    {{ sub.date_subscribed }}
-                                    <a href="{% url 'profile_view' pk=sub.customer.id %}">{{ sub.customer }}</a>
-                                </div>
-                            </div>
-                        {% empty %}
-                            No Subscribers
-                        {% endfor %}
-
-
-                        {% if subscribers.paginator.num_pages > 1 %}
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-center mt-3">
-                                    {# Pagination previous #}
-                                    {% if subscribers.has_previous %}
-                                        <li class="page-item">
-                                            <a class="page-link"
-                                               href="?page={{ request.GET.page }}&sub_page={{ subscribers.previous_page_number }}#subscribers">
-                                                Previous
-                                            </a>
-                                        </li>
-                                    {% else %}
-                                        <li class="page-item disabled">
-                                            <span class="page-link" tabindex="-1" aria-disabled="true">Previous</span>
-                                        </li>
-                                    {% endif %}
-
-                                    {# Pagination iteration #}
-                                    {% for p in subscribers.paginator.page_range %}
-                                        {% if p == subscribers.number %}
-                                            <li class="page-item active" aria-current="page">
-                                                <span class="page-link">{{ p }}<span
-                                                        class="sr-only">(current)</span></span>
-                                            </li>
-                                        {% else %}
-                                            <li class="page-item">
-                                                <a class="page-link"
-                                                   href="?page={{ request.GET.page }}&sub_page={{ p }}#subscribers">{{ p }}
-                                                </a>
-                                            </li>
-                                        {% endif %}
-                                    {% endfor %}
-
-                                    {# Pagination Next #}
-                                    {% if subscribers.has_next %}
-                                        <li class="page-item">
-                                            <a class="page-link"
-                                               href="?page={{ request.GET.page }}&sub_page={{ subscribers.next_page_number }}#subscribers">Previous</a>
-                                            {% else %}
-                                        <li class="page-item disabled">
-                                            <span class="page-link" tabindex="-1" aria-disabled="true">Next</span>
-                                        </li>
-                                    {% endif %}
-                                </ul>
-                            </nav>
-                        {% endif %}
-
-
-                    </div>
-                </div>
-            </div>
-        {% endif %}
 
         <div class="card m-4 shadow-sm">
             <div class="card-header bg-secondary text-white">
@@ -216,7 +93,7 @@
                                 {% else %}
                                     <li class="page-item">
                                         <a class="page-link"
-                                           href="?page={{ p }}&sub_page={{ request.GET.sub_page }}#reviews">{{ p }}
+                                           href="?page={{ p }}#reviews">{{ p }}
                                         </a>
                                     </li>
                                 {% endif %}
@@ -239,15 +116,6 @@
                     </nav>
                 {% endif %}
             </div>
-        </div>
-
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            {% include subscribe_page %}
         </div>
     </div>
 {% endblock %}

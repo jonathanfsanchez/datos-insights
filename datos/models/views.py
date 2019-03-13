@@ -26,42 +26,14 @@ def model_list(request, template_name='models/model_list.html'):
 
 def model_view(request, pk, template_name='models/model_view.html'):
     model = get_object_or_404(Model, pk=pk)
-    related = Model.objects.all()[0:3]
 
     reviews = model.modelreview_set.all()
     review_page = Paginator(reviews, 5)
-
-    subscribers = model.modelsubscription_set.all()
-    subscribe_page = Paginator(subscribers, 1)
-
     page = request.GET.get('page')
-    sub_page = request.GET.get('sub_page')
 
     context = dict()
     context['model'] = model
-    context['related'] = related
-
     context['reviews'] = review_page.get_page(page)
-
-    if request.user.id == model.user.id:
-        context['subscribers'] = subscribe_page.get_page(sub_page)
-
-    if request.user.is_authenticated:
-        if model.datosuser_set.filter(pk=request.user.id).exists():
-            # is bookmarked
-            context['bookmark_to_render'] = 'bookmark'
-        else:
-            context['bookmark_to_render'] = 'bookmark_border'
-
-    if subscribers.filter(customer=request.user.id).filter(date_unsubscribed__isnull=True).exists():
-        context['subscribe_page'] = 'subscriptions/unsubscribe_model_form.html'
-        context['subscription_to_render'] = "remove_shopping_cart"
-        context['sub_btn_text'] = "Unsubscribe"
-    else:
-        context['subscribe_page'] = 'subscriptions/subscription_model_form.html'
-        context['subscription_to_render'] = "add_shopping_cart"
-        context['sub_btn_text'] = "Subscribe"
-
     return render(request, template_name, context=context)
 
 
