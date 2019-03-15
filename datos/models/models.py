@@ -48,6 +48,18 @@ class Model(models.Model):
     def get_total_api_calls(self):
         return self.modelsubscription_set.aggregate(Count('modelapicall')).get('modelapicall__count')
 
+    def get_avg_api_calls(self):
+        return self.modelsubscription_set.aggregate(Avg('modelapicall__process_time_ms')).get(
+            'modelapicall__process_time_ms__avg')
+
+    def get_total_api_calls_by_customer(self, pk):
+        return self.modelsubscription_set.filter(customer=pk).aggregate(Count('modelapicall')).get(
+            'modelapicall__count')
+
+    def get_avg_api_calls_by_customer(self, pk):
+        return self.modelsubscription_set.filter(customer=pk).aggregate(Avg('modelapicall__process_time_ms')).get(
+            'modelapicall__process_time_ms__avg')
+
     class Meta:
         db_table = 'models'
 

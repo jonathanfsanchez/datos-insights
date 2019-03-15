@@ -21,6 +21,7 @@ def model_list(request, template_name='models/model_list.html'):
     context = dict()
     context['featured'] = featured
     context['popular'] = popular
+
     return render(request, template_name, context=context)
 
 
@@ -34,6 +35,17 @@ def model_view(request, pk, template_name='models/model_view.html'):
     context = dict()
     context['model'] = model
     context['reviews'] = review_page.get_page(page)
+
+    if request.user.is_authenticated:
+
+        if request.user.id == model.user.id:
+            # all users api calls
+            context['api_calls'] = model.get_total_api_calls()
+            context['api_calls_avg'] = model.get_avg_api_calls()
+        else:
+            context['api_calls'] = model.get_total_api_calls_by_customer(request.user.id)
+            context['api_calls_avg'] = model.get_avg_api_calls_by_customer(request.user.id)
+
     return render(request, template_name, context=context)
 
 

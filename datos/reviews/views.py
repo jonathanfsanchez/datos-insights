@@ -57,7 +57,7 @@ def review_model_create(request, pk, template_name='reviews/review_model_form.ht
     if form.is_valid():
         if request.user.is_authenticated:
             form.instance.author = request.user
-            form.instance.dataset.id = Model.objects.get(pk=pk)
+            form.instance.model = Model.objects.get(pk=pk)
             form.save()
             return redirect('models:model_view', pk=pk)
     return render(request=request, template_name=template_name, context={'form': form})

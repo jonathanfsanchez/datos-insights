@@ -2,8 +2,11 @@
 
 <div class="jumbotron shadow bg-secondary text-white pt-0 pr-0 pb-3">
     <div class="d-flex">
-        <div class=""><h1 class="pt-3 mb-0"><a class="text-white"
-                                               href="{% url 'models:model_view' model.id %}">{{ model.title }}</a></h1>
+        <div class="">
+            <h1 class="pt-3 mb-0">
+                <a class="text-white" href="{% url 'models:model_view' model.id %}">{{ model.title }}
+                </a>
+            </h1>
         </div>
         {% if bookmark_to_render %}
             <div class="ml-auto">
