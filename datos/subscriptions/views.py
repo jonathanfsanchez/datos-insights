@@ -55,6 +55,10 @@ def subscription_dataset_view(request, pk, template_name='subscriptions/subscrip
 #     return render(request, template_name, {'form': form})
 @login_required
 def subscription_model_list_view(request, pk, template_name='subscriptions/subscription_model_list_view.html'):
+    """
+    This view should show all the subscribers for a given model.
+
+    """
     model = get_object_or_404(Model, pk=pk)
 
     page = request.GET.get('page')
@@ -73,9 +77,13 @@ def subscription_model_list_view(request, pk, template_name='subscriptions/subsc
     return render(request=request, template_name=template_name, context=context)
 
 
-def subscription_model_view(request, pk, template_name='subscriptions/subscription_model_view.html'):
-    model_subscription = get_object_or_404(ModelSubscription, pk=pk)
-    return render(request=request, template_name=template_name, context={'model_subscription': model_subscription})
+# def subscription_model_view(request, pk, template_name='subscriptions/subscription_model_view.html'):
+#     """
+#     This view should show the details of one specific subscription. Not Required since we are abstracting subscriptions
+#
+#     """
+#     model_subscription = get_object_or_404(ModelSubscription, pk=pk)
+#     return render(request=request, template_name=template_name, context={'model_subscription': model_subscription})
 
 
 @login_required

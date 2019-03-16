@@ -60,6 +60,9 @@ class Model(models.Model):
         return self.modelsubscription_set.filter(customer=pk).aggregate(Avg('modelapicall__process_time_ms')).get(
             'modelapicall__process_time_ms__avg')
 
+    def get_unique_subscribers(self):
+        return self.modelsubscription_set.values('model__modelsubscription__customer').distinct().count()
+
     class Meta:
         db_table = 'models'
 

@@ -1,46 +1,50 @@
 {% extends 'base.html' %}
+{% load rating_stars %}
 
-{% block title %}My Subscription History{% endblock %}
+{% block title %}My Subscriptions - DatosInsights.com{% endblock %}
 
 {% block content %}
-    <div class="container">
-
-        <div class="card m-4 shadow-sm">
-            <div class="card-header bg-secondary text-white">
-                Models
-            </div>
-            <div class="card-body">
-                {% for sub in model_subs %}
-                    <div class="card mx-4">
-                        <div class="card-body">
-                            <h5 class="card-title text-dark">{{ sub.get_subscription_type_display }} - {{ sub.api_calls }} API Calls</h5>
-                            {{ sub.date_subscribed }}
-                            <a href="{% url 'models:model_view' sub.model.id %}">{{ sub.model.title }}</a>
-                        </div>
-                    </div>
-                {% empty %}
-                    No Subscribers
-                {% endfor %}
-            </div>
+     <div class="container ">
+        <div class="jumbotron bg-secondary text-white shadow">
+            <h1 class="display-6">Uploads</h1>
+            <p>Here you will find all your uploads. In a future release we will have a fully functional
+                admin dashboard that will allow you to gain more insights into how your customers are using your
+                products.</p>
         </div>
 
-        <div class="card m-4 shadow-sm">
-            <div class="card-header bg-secondary text-white">
-                Datasets
-            </div>
-            <div class="card-body">
-                {% for sub in dataset_subs %}
-                    <div class="card mx-4">
-                        <div class="card-body">
-                            <h5 class="card-title text-dark">{{ sub.get_subscription_type_display }}</h5>
-                            {{ sub.date_subscribed }}
 
-                        </div>
-                    </div>
-                {% empty %}
-                    No Subscribers
-                {% endfor %}
+        <div class="card m-4 bg-light border-0">
+            <div class="card-header bg-secondary text-white shadow-sm">
+                My Subscriptions
             </div>
+            <div class="card-body pt-0">
+                <ul class="list-group list-group-flush">
+                    {% for model in model_subs %}
+                        <ul class="list-group-item list-group-item-action border p-4 mt-2 shadow-sm">
+                            <div class="d-flex">
+                                {% include 'models/_model_banner_inline_item.html' %}
+                                <div class="btn-group-vertical ml-auto rounded-0 shadow-sm" role="group"
+                                     aria-label="Basic example">
+
+                                    <a href="{% url 'models:model_update' model.id %}"
+                                       class='btn btn-sm btn-outline-primary'>
+                                        Edit
+                                    </a>
+                                    <a href="{% url 'subscriptions:subscription_model_list_view' model.id %}"
+                                       class='btn btn-sm btn-outline-primary'>
+                                        Subscribers
+                                    </a>
+                                    <a href="#" class='btn btn-sm btn-outline-primary'>Price Change</a>
+                                </div>
+
+                            </div>
+                        </ul>
+                    {% empty %}
+                        No Models
+                    {% endfor %}
+                </ul>
+            </div>
+
         </div>
     </div>
 {% endblock %}

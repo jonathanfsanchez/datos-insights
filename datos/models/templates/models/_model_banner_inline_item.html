@@ -11,9 +11,13 @@
     </div>
 
     <div class="d-flex flex-wrap">
-                <span class="badge badge-dark shadow-sm"
-                      style="font-size: 12px">{{ model.modelreview_set.count }} Review{{ model.modelreview_set.count|pluralize }}</span>
-        <span class="badge badge-dark mx-2 shadow-sm">{% get_user_api_calls model=model %} API Calls</span>
-        <span class="badge badge-dark shadow-sm">{% get_user_api_avg_time model=model %} Avg API Response Time</span>
+        {% if request.user == model.user %}
+            <span class="badge badge-dark shadow-sm"
+                  style="font-size: 12px">{{ model.modelreview_set.count }} Review{{ model.modelreview_set.count|pluralize }}</span>
+            <span class="badge badge-dark mx-2 shadow-sm">{% get_user_api_calls model=model %} API Calls</span>
+            <span class="badge badge-dark shadow-sm">{% get_user_api_avg_time model=model %} Avg API Response Time</span>
+            <span class="badge badge-dark shadow-sm ml-2">{{ model.get_unique_subscribers }} Subscribers</span>
+        {% else %}
+        {% endif %}
     </div>
 </div>
