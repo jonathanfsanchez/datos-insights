@@ -13,7 +13,7 @@
 
     {#<a class="text-white" href="{% url 'profile_view' pk=model.user.id %}">{{ model.user.username }}</a>#}
     <div class="card m-4 shadow-sm">
-        <div class="card-header bg-secondary text-white">
+        <div class="card-header">
             Summary
         </div>
         <div class="card-body">
@@ -31,7 +31,7 @@
 
         {% endif %}
             <a href="{% url 'subscriptions:subscription_model_list_view' model.id %}">
-                <button class="btn btn-sm btn-outline-primary ml-2 py-0">Subscription Details</button>
+                <button class="btn btn-sm btn-light border border-secondary ml-2 py-0 shadow-sm">Subscription Details</button>
             </a>
         </div>
 
@@ -39,13 +39,13 @@
     </div>
 
     <div class="card m-4 shadow-sm">
-        <div class="card-header bg-secondary text-white">
+        <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <a name="reviews">Reviews</a>
 
 
                 <a href="{% url 'reviews:review_model_create' pk=model.id %}"
-                   class="btn btn-sm btn-light d-flex align-items-center shadow-sm">
+                   class="btn btn-sm btn-light d-flex align-items-center shadow-sm border border-secondary">
                     Add a Review
                     <i class="material-icons ml-2">rate_review</i>
                 </a>

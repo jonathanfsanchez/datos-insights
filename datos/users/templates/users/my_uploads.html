@@ -5,36 +5,37 @@
 {% block content %}
 
     <div class="container ">
-        <div class="jumbotron bg-secondary text-white shadow">
+        <div class="jumbotron bg-secondary text-white border border-secondary shadow py-3">
             <h1 class="display-6">Uploads</h1>
             <p>Here you will find all your uploads. In a future release we will have a fully functional
                 admin dashboard that will allow you to gain more insights into how your customers are using your
                 products.</p>
+            <span class="badge badge-dark mr-2 shadow-sm">{{ request.user.model_set.count }} Model Uploads</span>
+            <span class="badge badge-dark shadow-sm">{{ request.user.dataset_set.count }} Dataset Uploads</span>
+
         </div>
 
-
-        <div class="card m-4 bg-light border-0">
-            <div class="card-header bg-secondary text-white shadow-sm">
+        <div class="card m-4 border-0">
+            <div class="card-header bg-white rounded border border-secondary">
                 My Model Uploads
             </div>
-            <div class="card-body pt-0">
+            <div class="card-body pt-0 bg-light px-0">
                 <ul class="list-group list-group-flush">
                     {% for model in request.user.model_set.all %}
-                        <ul class="list-group-item list-group-item-action border p-4 mt-2 shadow-sm">
-                            <div class="d-flex">
+                        <ul class="list-group-item border-0 bg-light px-0 py-0 pt-1">
+                            <div class="d-flex bg-secondary p-3 rounded text-white shadow-sm">
                                 {% include 'models/_model_banner_inline_item.html' %}
-                                <div class="btn-group-vertical ml-auto rounded-0 shadow-sm" role="group"
-                                     aria-label="Basic example">
+                                <div class="d-flex flex-column ml-auto">
 
                                     <a href="{% url 'models:model_update' model.id %}"
-                                       class='btn btn-sm btn-outline-primary'>
+                                       class='btn btn-sm btn-light'>
                                         Edit
                                     </a>
                                     <a href="{% url 'subscriptions:subscription_model_list_view' model.id %}"
-                                       class='btn btn-sm btn-outline-primary'>
+                                       class='btn btn-sm btn-light my-1'>
                                         Subscribers
                                     </a>
-                                    <a href="#" class='btn btn-sm btn-outline-primary'>Price Change</a>
+                                    <a href="#" class='btn btn-sm btn-light'>Price Change</a>
                                 </div>
 
                             </div>
@@ -44,7 +45,6 @@
                     {% endfor %}
                 </ul>
             </div>
-
         </div>
 
         {#        # TODO#}

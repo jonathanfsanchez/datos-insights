@@ -11,7 +11,7 @@ star_border = '<i class="material-icons text-warning" style="font-size: {font_si
 @register.simple_tag
 def get_ratings(rating, font_size=24):
     if rating is None:
-        return mark_safe('No Reviews')
+        return mark_safe('<small>No Reviews</small>')
 
     html_ratings = ''
 
