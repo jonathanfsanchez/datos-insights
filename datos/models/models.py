@@ -38,6 +38,12 @@ class Model(models.Model):
 
     def get_avg_stars(self):
         if self.modelreview_set.exists():
+            return round(self.modelreview_set.aggregate(Avg('stars')).get('stars__avg'), 1)
+        else:
+            return None
+
+    def get_avg_stars_floor(self):
+        if self.modelreview_set.exists():
             return round(self.modelreview_set.aggregate(Avg('stars')).get('stars__avg') * 2) / 2
         else:
             return None

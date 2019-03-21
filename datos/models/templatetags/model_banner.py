@@ -6,10 +6,9 @@ register = template.Library()
 
 
 @register.inclusion_tag('models/model_banner_full.html', takes_context=True)
-def display_full_banner(context, model_id):
+def display_full_banner(context):
     request = context['request']
-
-    model = Model.objects.get(pk=model_id)
+    model = context['model']
 
     context['banner_btn_icon'] = "add_shopping_cart"
     context['banner_btn_page'] = 'subscriptions/subscription_model_form.html'

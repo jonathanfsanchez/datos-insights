@@ -28,13 +28,8 @@ def model_list(request, template_name='models/model_list.html'):
 def model_view(request, pk, template_name='models/model_view.html'):
     model = get_object_or_404(Model, pk=pk)
 
-    reviews = model.modelreview_set.all()
-    review_page = Paginator(reviews, 5)
-    page = request.GET.get('page')
-
     context = dict()
     context['model'] = model
-    context['reviews'] = review_page.get_page(page)
 
     if request.user.is_authenticated:
 

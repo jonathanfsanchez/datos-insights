@@ -25,7 +25,7 @@ class ModelReview(models.Model):
     class Meta:
         db_table = 'model_reviews'
         unique_together = ('author', 'model')
-        ordering = ['last_modified']
+        ordering = ['-last_modified']
 
 
 class DatasetReview(models.Model):

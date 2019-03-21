@@ -19,12 +19,13 @@ class ModelSubForm(ModelForm):
 
 @login_required
 def subscription_list_view(request, template_name='subscriptions/subscription_list_view.html'):
-    model = ModelSubscription.objects.filter(customer=request.user.id)
-    dataset = DatasetSubscription.objects.filter(customer=request.user.id)
+    model = Model.objects.filter(modelsubscription__customer=request.user.id).filter(
+        modelsubscription__date_unsubscribed__isnull=True).distinct()
+    # dataset = DatasetSubscription.objects.filter(customer=request.user.id)
 
     context = dict()
     context['model_subs'] = model
-    context['dataset_subs'] = dataset
+    # context['dataset_subs'] = dataset
 
     return render(request=request, template_name=template_name, context=context)
 

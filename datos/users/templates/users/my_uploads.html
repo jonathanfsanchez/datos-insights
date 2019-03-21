@@ -5,7 +5,7 @@
 {% block content %}
 
     <div class="container ">
-        <div class="jumbotron bg-secondary text-white border border-secondary shadow py-3">
+        <div class="jumbotron bg-white text-dark shadow py-3">
             <h1 class="display-6">Uploads</h1>
             <p>Here you will find all your uploads. In a future release we will have a fully functional
                 admin dashboard that will allow you to gain more insights into how your customers are using your
@@ -15,27 +15,27 @@
 
         </div>
 
-        <div class="card m-4 border-0">
-            <div class="card-header bg-white rounded border border-secondary">
+        <div class="card border-0">
+            <div class="card-header bg-white">
                 My Model Uploads
             </div>
-            <div class="card-body pt-0 bg-light px-0">
+            <div class="card-body pt-0 px-0">
                 <ul class="list-group list-group-flush">
                     {% for model in request.user.model_set.all %}
-                        <ul class="list-group-item border-0 bg-light px-0 py-0 pt-1">
-                            <div class="d-flex bg-secondary p-3 rounded text-white shadow-sm">
+                        <ul class="list-group-item bg-white text-dark px-0 py-0 pt-1">
+                            <div class="d-flex p-3">
                                 {% include 'models/_model_banner_inline_item.html' %}
                                 <div class="d-flex flex-column ml-auto">
 
                                     <a href="{% url 'models:model_update' model.id %}"
-                                       class='btn btn-sm btn-light'>
+                                       class='btn btn-sm btn-outline-dark'>
                                         Edit
                                     </a>
                                     <a href="{% url 'subscriptions:subscription_model_list_view' model.id %}"
-                                       class='btn btn-sm btn-light my-1'>
+                                       class='btn btn-sm btn-outline-dark my-1'>
                                         Subscribers
                                     </a>
-                                    <a href="#" class='btn btn-sm btn-light'>Price Change</a>
+                                    <a href="#" class='btn btn-sm btn-outline-dark'>Price Change</a>
                                 </div>
 
                             </div>

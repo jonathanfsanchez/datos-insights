@@ -1,17 +1,17 @@
 {% load rating_stars %}
 
-<div class="jumbotron shadow bg-secondary text-white pt-0 pr-0 pb-3">
+<div class="jumbotron shadow bg-white text-dark border pt-0 pr-0 pb-3">
     <div class="d-flex">
         <div class="">
             <h1 class="pt-3 mb-0">
-                <a class="text-decoration-none text-white" href="{% url 'models:model_view' model.id %}">{{ model.title }}
+                <a class="text-decoration-none text-dark font-weight-bold" href="{% url 'models:model_view' model.id %}">{{ model.title }}
                 </a>
             </h1>
         </div>
         {% if bookmark_to_render %}
             <div class="ml-auto">
                 <form action="{% url 'models:bookmark_model' model.id %}" method="post">{% csrf_token %}
-                    <button type=submit class="btn btn-sm bg-secondary text-white border-0">
+                    <button type=submit class="btn btn-sm border-0 text-dark">
                         <i class="material-icons" style="font-size: 49px">{{ bookmark_to_render }}</i>
                     </button>
                 </form>
@@ -20,7 +20,8 @@
     </div>
 
     <div class="d-flex align-items-center mb-1">
-        {% get_ratings rating=model.get_avg_stars %}
+        <div class="strong pr-2">{{ model.get_avg_stars }}</div>
+        {% get_ratings rating=model.get_avg_stars_floor %}
         <a href="#reviews" class="small text-white mx-2">
                     <span class="badge badge-dark shadow-sm"
                           style="font-size: 12px">{{ model.modelreview_set.count }} Review{{ model.modelreview_set.count|pluralize }}</span>
@@ -46,7 +47,7 @@
 
     <div class="d-flex align-items-center">
         <i class="material-icons pr-1">account_box</i>
-        <a class="text-white py-2" href="{% url 'profile_view' pk=model.user.id %}">
+        <a class="py-2 text-dark text-decoration-none" href="{% url 'profile_view' pk=model.user.id %}">
             {{ model.user.username }}
         </a>
 
@@ -54,7 +55,7 @@
 
             {% if request.user == model.user %}
                 <a href="{% url 'models:model_update' model.id %}"
-                   class="btn btn-sm btn-light text-dark d-flex align-items-center mx-3 shadow-sm">Edit
+                   class="btn btn-sm btn-outline-dark d-flex align-items-center mx-3 shadow-sm">Edit
                     <i class="material-icons ml-2">edit</i></a>
             {% else %}
                 <button type="button" data-toggle="modal" data-target=".bd-example-modal-lg"
