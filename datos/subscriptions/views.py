@@ -19,8 +19,17 @@ class ModelSubForm(ModelForm):
 
 @login_required
 def subscription_list_view(request, template_name='subscriptions/subscription_list_view.html'):
+    sort_by = request.GET.get('sortby')
+
+    # if sort_by == 'all':
+    # model = Model.objects.filter(modelsubscription__customer=request.user.id).distinct()
+    # elif sort_by == 'inactive':
     model = Model.objects.filter(modelsubscription__customer=request.user.id).filter(
         modelsubscription__date_unsubscribed__isnull=True).distinct()
+    # else:
+    #     model = Model.objects.filter(modelsubscription__customer=request.user.id).filter(
+    #         modelsubscription__date_unsubscribed__isnull=True).distinct()
+
     # dataset = DatasetSubscription.objects.filter(customer=request.user.id)
 
     context = dict()

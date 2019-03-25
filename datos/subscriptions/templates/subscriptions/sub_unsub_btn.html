@@ -1,0 +1,15 @@
+<button type="button" data-toggle="modal" data-target=".bd-example-modal-lg{{ model.id }}"
+        class="btn btn-sm btn-light text-dark d-flex align-items-center mx-3 shadow-sm">{{ banner_btn_text }}
+    <i class="material-icons ml-2">{{ banner_btn_icon }}</i>
+</button>
+
+
+<!-- Modal -->
+{% if request.user != model.user %}
+    <div class="modal fade bd-example-modal-lg{{ model.id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            {% include banner_btn_page %}
+        </div>
+    </div>
+{% endif %}

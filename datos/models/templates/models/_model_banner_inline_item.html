@@ -4,7 +4,9 @@
 
 <div>
     <div class="d-inline-flex">
-    <a href="{% url 'models:model_view' pk=model.id %}" class="text-decoration-none text-dark"><h3 class="p-0 m-0">{{ model.title }}</h3></a>
+        <a href="{% url 'models:model_view' pk=model.id %}"
+           class="text-decoration-none text-dark font-weight-bold h4 p-0 m-0">
+            {{ model.title }}</a>
 
     </div>
 
@@ -14,20 +16,30 @@
         <a href="#" class="badge badge-info">Tag</a>
     </div>
 
-    <div class="flex-row">
-        {{ model.get_avg_stars_floor }}
-{#        {% get_ratings rating=model.get_avg_stars_floor font_size=16 %}#}
-
+    <div class="d-flex flex-row align-items-center">
+        {{ model.get_avg_stars_floor }}{% get_ratings rating=model.get_avg_stars_floor font_size=16 %}
     </div>
 
     <div class="d-flex flex-wrap">
+            <span class="badge badge-secondary shadow-sm mt-1 mr-1">
+                {{ model.modelreview_set.count }} Review{{ model.modelreview_set.count|pluralize }}
+            </span>
+
         {% if request.user == model.user %}
-            <span class="badge badge-dark shadow-sm mt-1"
-                  style="font-size: 12px">{{ model.modelreview_set.count }} Review{{ model.modelreview_set.count|pluralize }}</span>
-            <span class="badge badge-dark mx-2 shadow-sm mt-1">{% get_user_api_calls model=model %} API Calls</span>
-            <span class="badge badge-dark shadow-sm mt-1">{% get_user_api_avg_time model=model %} Avg API Response Time</span>
-            <span class="badge badge-dark shadow-sm ml-2 mt-1">{{ model.get_unique_subscribers }} Subscribers</span>
-        {% else %}
+            <span class="badge badge-secondary shadow-sm mt-1 mr-1">
+                {{ model.get_unique_subscribers }} Subscribers
+            </span>
         {% endif %}
+
+        <span class="badge badge-secondary shadow-sm mt-1 mr-1">
+            {% if request.user == model.user %}
+                Users made {% get_user_api_calls model=model %} API Calls
+            {% else %}
+                You made {% get_user_api_calls model=model %} API Calls
+            {% endif %}
+            </span>
+        <span class="badge badge-secondary shadow-sm mt-1 mr-1">
+                {% get_user_api_avg_time model=model %} Avg API Response Time
+        </span>
     </div>
 </div>

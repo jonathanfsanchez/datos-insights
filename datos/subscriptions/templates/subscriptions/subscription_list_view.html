@@ -1,49 +1,45 @@
 {% extends 'base.html' %}
+
 {% load rating_stars %}
+{% load add_edit_review %}
+{% load sun_unsub_btn %}
+
+
 
 {% block title %}My Subscriptions - DatosInsights.com{% endblock %}
 
 {% block content %}
-     <div class="container ">
-        <div class="jumbotron bg-white text-dark border shadow">
+    <div class="container ">
+        <div class="jumbotron bg-white text-dark border-0 py-3">
             <h1 class="display-6">My Subscriptions</h1>
-            <p>Here are all the products that you are currently subscribed to. Subscribing allows us to bill you for usage.
-                If you haven't subscribed all API requests for a given product will be denied. There is no cost associated until
-            you consume the product via a download or API inference call.</p>
+            <p>Here are all the products that you are currently subscribed to. Subscribing allows us to bill you for
+                usage.
+                If you haven't subscribed all API requests for a given product will be denied. There is no cost
+                associated until
+                you consume the product via a download or API inference call.</p>
         </div>
 
 
-        <div class="card m-4 bg-light border-0">
-            <div class="card-header bg-secondary text-white shadow-sm">
-                My Subscriptions
-            </div>
-            <div class="card-body pt-0">
-                <ul class="list-group list-group-flush">
-                    {% for model in model_subs %}
-                        <ul class="list-group-item list-group-item-action border p-4 mt-2 shadow-sm">
-                            <div class="d-flex">
-                                {% include 'models/_model_banner_inline_item.html' %}
-                                <div class="btn-group-vertical ml-auto rounded-0 shadow-sm" role="group"
-                                     aria-label="Basic example">
+        <div class="card border-0">
+            <h4 class="p-0 m-0 font-weight-bold">My Model Subscriptions</h4>
+            <div class="card-body"></div>
 
-                                    <a href="{% url 'models:model_update' model.id %}"
-                                       class='btn btn-sm btn-outline-primary'>
-                                        Edit
-                                    </a>
-                                    <a href="{% url 'subscriptions:subscription_model_list_view' model.id %}"
-                                       class='btn btn-sm btn-outline-primary'>
-                                        Subscribers
-                                    </a>
-                                    <a href="#" class='btn btn-sm btn-outline-primary'>Price Change</a>
-                                </div>
+            <ul class="list-group list-group-flush">
+                {% for model in model_subs %}
+                    <ul class="list-group-item list-group-item">
+                        <div class="d-flex">
+                            {% include 'models/_model_banner_inline_item.html' %}
 
+                            <div class="d-flex flex-column ml-auto">
+                                {% add_edit_btn user=request.user model=model %}
+                                {% get_sub_unsub_btn model=model %}
                             </div>
-                        </ul>
-                    {% empty %}
-                        No Models
-                    {% endfor %}
-                </ul>
-            </div>
+                        </div>
+                    </ul>
+                {% empty %}
+                    No Models
+                {% endfor %}
+            </ul>
 
         </div>
     </div>

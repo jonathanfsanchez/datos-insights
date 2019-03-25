@@ -9,6 +9,9 @@
     <div class="container">
         {% display_full_banner %}
 
+        <hr/>
+
+
         {#<a class="text-white" href="{% url 'profile_view' pk=model.user.id %}">{{ model.user.username }}</a>#}
         <div class="card border-0">
             <div class="card-header d-flex justify-content-between align-items-center bg-white border-0">
@@ -16,15 +19,15 @@
                 {% if api_calls %}
                     <div class="text-muted small d-flex justify-content-center align-items-center">
                         <div class="mx-2">
-                        {% if request.user == model.user %}
+                            {% if request.user == model.user %}
 
-                            Users have made {{ api_calls }} calls to this API - avg response {{ api_calls_avg }} ms
+                                Users have made {{ api_calls }} calls to this API - avg response {{ api_calls_avg }} ms
 
-                        {% else %}
+                            {% else %}
 
-                            You have made {{ api_calls }} calls to this API - avg response {{ api_calls_avg }} ms
+                                You have made {{ api_calls }} calls to this API - avg response {{ api_calls_avg }} ms
 
-                        {% endif %}
+                            {% endif %}
                         </div>
                         <a href="{% url 'subscriptions:subscription_model_list_view' model.id %}"
                            class="btn btn-outline-dark">Subscription Details

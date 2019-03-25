@@ -68,7 +68,7 @@ def review_model_update(request, pk, template_name='reviews/review_model_form.ht
     form = ModelReviewForm(request.POST or None, instance=model_review)
     if form.is_valid():
         form.save()
-        return redirect('models:model_view', pk=pk)
+        return redirect('models:model_view', pk=model_review.model.pk)
     return render(request=request, template_name=template_name, context={'form': form})
 
 # def dataset_delete(request, pk, template_name='datasets/dataset_confirm_delete.html'):

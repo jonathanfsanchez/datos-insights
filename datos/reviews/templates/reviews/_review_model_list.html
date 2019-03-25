@@ -1,15 +1,13 @@
 {% load rating_stars %}
+{% load add_edit_review %}
+
 
 <div class="card border-0">
     <div class="card-header bg-white border-0 pb-0">
         <div class="d-flex justify-content-between align-items-center ">
             <a class="h4 p-0 m-0 font-weight-bold" name="reviews">Reviews</a>
 
-            <a href="{% url 'reviews:review_model_create' pk=model.id %}"
-               class="btn btn-outline-dark d-flex align-items-center">
-                Add a Review
-                <i class="material-icons ml-2">rate_review</i>
-            </a>
+            {% add_edit_btn user=request.user model=model%}
         </div>
     </div>
 
@@ -97,7 +95,7 @@
 
     <div class="card-columns">
         {% for r in reviews %}
-            <div class="card m-1 border-0 bg-light" style="min-width: 18rem">
+            <div class="card m-1 border-0 bg-light" style="min-width: 10rem">
                 <div class="card-body">
                     <div class="card-title"> {% get_ratings rating=r.stars font_size=18 %}
                         <div class="d-flex align-items-center text-warning">

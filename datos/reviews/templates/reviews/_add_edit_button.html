@@ -1,0 +1,13 @@
+{% if edit_review_btn_txt %}
+    <a href="{% url 'reviews:review_model_update' review_model_id %}"
+       class="btn btn-outline-dark d-flex align-items-center">
+        Edit My Review
+        <i class="material-icons ml-2">rate_review</i>
+    </a>
+{% elif add_review_btn_text %}
+    <a href="{% url 'reviews:review_model_create' review_model_id %}"
+       class="btn btn-outline-dark d-flex align-items-center">
+        Add a Review
+        <i class="material-icons ml-2">rate_review</i>
+    </a>
+{% endif %}
