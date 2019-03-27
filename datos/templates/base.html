@@ -42,21 +42,24 @@
 
             <div>
                 {% if user.is_authenticated %}
-            <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown pr-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Welcome, {{ user.username }}!
-                        </a>
-                        <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{% url 'profile_view' user.id %}">View My Profile</a>
-                            <a class="dropdown-item" href="{% url 'subscriptions:subscription_list_view' %}">View My
-                                Subscriptions</a>
-                            <a class="dropdown-item" href="{% url 'uploads_view' %}">View My Uploads</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{% url 'logout' %}" class="dropdown-item">Logout</a>
-                        </div>
-                    </li></ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown pr-5">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Welcome, {{ user.username }}!
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{% url 'profile_view' user.id %}">My Profile</a>
+                                <a class="dropdown-item" href="{% url 'subscriptions:subscription_list_view' %}">My
+                                    Subscriptions</a>
+                                <a class="dropdown-item" href="{% url 'uploads_view' %}">My Uploads</a>
+                                <a class="dropdown-item" href="{% url 'bookmarks_view' %}">My Bookmarks</a>
+
+                                <div class="dropdown-divider"></div>
+                                <a href="{% url 'logout' %}" class="dropdown-item">Logout</a>
+                            </div>
+                        </li>
+                    </ul>
                 {% else %}
                     <a href="{% url 'login' %}" class="btn btn-outline-primary">Login</a>
                     <a href="{% url 'signup' %}" class="btn btn-outline-primary">Signup</a>

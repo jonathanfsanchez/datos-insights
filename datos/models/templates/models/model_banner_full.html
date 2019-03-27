@@ -1,5 +1,6 @@
 {% load rating_stars %}
 {% load sun_unsub_btn %}
+{% load bookmark %}
 
 <div class="jumbotron  bg-white text-dark  pt-0 pr-0 pb-3">
     <div class="d-flex">
@@ -10,15 +11,9 @@
                 </a>
             </h1>
         </div>
-        {% if bookmark_to_render %}
-            <div class="ml-auto">
-                <form action="{% url 'models:bookmark_model' model.id %}" method="post">{% csrf_token %}
-                    <button type=submit class="btn btn-sm border-0 text-dark">
-                        <i class="material-icons" style="font-size: 49px">{{ bookmark_to_render }}</i>
-                    </button>
-                </form>
-            </div>
-        {% endif %}
+        <div class="ml-auto">
+            {% get_model_bookmark_state model=model%}
+        </div>
     </div>
 
     <div class="d-flex align-items-center mb-1">

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load bookmark %}
+
+{% block title %}My Bookmarks - DatosInsights.com{% endblock %}
+
+{% block content %}
+
+    <div class="container ">
+        <div class="jumbotron bg-white text-dark border-0 py-3">
+            <h1 class="display-6">Bookmarks</h1>
+            <p>Here you will find all your bookmarks</p>
+            <span class="badge badge-dark mr-2 shadow-sm">{{ request.user.model_bookmarks.count }} Model Bookmarks</span>
+
+        </div>
+
+        <div class="card border-0">
+            <h4 class="p-0 m-0 font-weight-bold">My Model Bookmarks</h4>
+            <div class="card-body"></div>
+            <ul class="list-group list-group-flush">
+                {% for model in request.user.model_bookmarks.all %}
+                    <ul class="list-group-item list-group-item-action">
+                        <div class="d-flex">
+                            {% include 'models/_model_banner_inline_item.html' %}
+                            <div class="ml-auto">
+                                {% get_model_bookmark_state model=model %}
+                            </div>
+                        </div>
+
+                    </ul>
+                {% empty %}
+                    No Models
+                {% endfor %}
+            </ul>
+        </div>
+
+        {#        # TODO#}
+        {#        <div class="card m-4 bg-light border-0">#}
+        {#            <div class="card-header bg-secondary text-white rounded-0">#}
+        {#                My Dataset Uploads#}
+        {#            </div>#}
+        {#            <div class="card-body pt-0">#}
+        {#                <ul class="list-group list-group-flush">#}
+        {#                    {% for model in request.user.model_set.all %}#}
+        {#                        <ul class="list-group-item list-group-item-action border rounded-0 p-4 mt-2">#}
+        {#                            <div class="d-flex">#}
+        {#                                {% include 'models/_model_banner_inline_item.html' %}#}
+        {#                                <div class="btn-group-vertical ml-auto rounded-0" role="group"#}
+        {#                                     aria-label="Basic example">#}
+        {##}
+        {#                                    <a href="{% url 'models:model_update' model.id %}"#}
+        {#                                       class='btn btn-sm btn-outline-primary rounded-0'>#}
+        {#                                        Edit#}
+        {#                                    </a>#}
+        {#                                    <a href="{% url 'subscriptions:subscription_model_list_view' model.id %}"#}
+        {#                                       class='btn btn-sm btn-outline-primary'>#}
+        {#                                        Subscribers#}
+        {#                                    </a>#}
+        {#                                    <a href="#" class='btn btn-sm btn-outline-primary rounded-0'>Price Change</a>#}
+        {#                                </div>#}
+        {##}
+        {#                            </div>#}
+        {#                        </ul>#}
+        {#                    {% empty %}#}
+        {#                        No Models#}
+        {#                    {% endfor %}#}
+        {#                </ul>#}
+        {#            </div>#}
+        {##}
+        {#        </div>#}
+
+    </div>
+
+{% endblock content %}

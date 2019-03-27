@@ -34,3 +34,10 @@ def uploads_view(request, template_name="users/my_uploads.html"):
     # datos_user = get_object_or_404(DatosUser, pk=pk)
 
     return render(request=request, template_name=template_name, context={})
+
+
+@login_required
+def bookmarks_view(request, template_name="users/my_bookmarks.html"):
+    context = dict()
+
+    return render(request=request, template_name=template_name, context=context)

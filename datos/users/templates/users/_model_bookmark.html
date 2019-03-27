@@ -1,0 +1,5 @@
+<form action="{% url 'models:bookmark_model' model.id %}" method="post">{% csrf_token %}
+    <button type=submit class="btn btn-sm border-0 text-dark">
+        <i class="material-icons" style="font-size: 49px">{{ bookmark_to_render }}</i>
+    </button>
+</form>
