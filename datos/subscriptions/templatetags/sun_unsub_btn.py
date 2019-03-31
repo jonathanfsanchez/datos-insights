@@ -7,6 +7,9 @@ register = template.Library()
 def get_sub_unsub_btn(context, model):
     request = context['request']
 
+    if request.user == model.user:
+        return
+
     context['banner_btn_icon'] = "add_shopping_cart"
     context['banner_btn_page'] = 'subscriptions/subscription_model_form.html'
     context['banner_btn_text'] = "Subscribe"

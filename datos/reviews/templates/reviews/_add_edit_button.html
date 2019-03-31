@@ -1,10 +1,10 @@
-{% if edit_review_btn_txt %}
+{% if edit_review_btn_txt == 1 %}
     <a href="{% url 'reviews:review_model_update' review_model_id %}"
        class="btn btn-outline-dark d-flex align-items-center">
         Edit My Review
         <i class="material-icons ml-2">rate_review</i>
     </a>
-{% elif add_review_btn_text %}
+{% elif  edit_review_btn_txt == 0 %}
     <a href="{% url 'reviews:review_model_create' review_model_id %}"
        class="btn btn-outline-dark d-flex align-items-center">
         Add a Review

@@ -30,7 +30,7 @@
                         <div class="d-flex">
                             {% include 'models/_model_banner_inline_item.html' %}
 
-                            <div class="d-flex flex-column ml-auto">
+                            <div class="d-flex flex-column ml-auto justify-content-around">
                                 {% add_edit_btn user=request.user model=model %}
                                 {% get_sub_unsub_btn model=model %}
                             </div>

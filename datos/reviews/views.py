@@ -1,25 +1,13 @@
 from django.contrib.auth.decorators import login_required
-from django.forms import ModelForm
 from django.shortcuts import render, get_object_or_404, redirect
 
 from datasets.models import Dataset
 from models.models import Model
+from reviews.forms import DatasetReviewForm, ModelReviewForm
 from .models import DatasetReview, ModelReview
 
 
 # Create your views here.
-class DatasetReviewForm(ModelForm):
-    class Meta:
-        model = DatasetReview
-        fields = ['title', 'text', 'stars']
-
-
-class ModelReviewForm(ModelForm):
-    class Meta:
-        model = ModelReview
-        fields = ['title', 'text', 'stars']
-
-
 def review_dataset_view(request, pk, template_name='reviews/review_dataset_view.html'):
     dataset_review = get_object_or_404(DatasetReview, pk=pk)
     return render(request=request, template_name=template_name, context={'dataset_review': dataset_review})
