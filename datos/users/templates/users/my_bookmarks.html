@@ -18,7 +18,7 @@
             <div class="card-body"></div>
             <ul class="list-group list-group-flush">
                 {% for model in request.user.model_bookmarks.all %}
-                    <ul class="list-group-item list-group-item-action">
+                    <ul class="list-group-item">
                         <div class="d-flex">
                             {% include 'models/_model_banner_inline_item.html' %}
                             <div class="ml-auto">

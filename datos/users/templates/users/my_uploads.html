@@ -20,7 +20,7 @@
             <div class="card-body"></div>
             <ul class="list-group list-group-flush">
                 {% for model in request.user.model_set.all %}
-                    <ul class="list-group-item list-group-item-action">
+                    <ul class="list-group-item">
                         <div class="d-flex">
                             {% include 'models/_model_banner_inline_item.html' %}
 
@@ -29,10 +29,10 @@
                                     Edit
                                 </a>
 
-                                <a href="{% url 'subscriptions:subscription_model_list_view' model.id %}"
-                                   class='btn btn-outline-dark my-1'>
-                                    Subscribers
-                                </a>
+{#                                <a href="{% url 'subscriptions:subscription_model_list_view' model.id %}"#}
+{#                                   class='btn btn-outline-dark my-1'>#}
+{#                                    Subscribers#}
+{#                                </a>#}
 
                                 <a href="#" class='btn btn-outline-dark'>Price Change</a>
                             </div>
