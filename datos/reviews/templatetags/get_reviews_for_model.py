@@ -6,6 +6,13 @@ register = template.Library()
 
 @register.inclusion_tag('reviews/_review_model_list.html', takes_context=True)
 def model_reviews_list(context):
+    """
+    Returns the review count for each star bucket. e.g. a product has 2 reviews, a 1 *, and a 5 *.
+    This will return 50% 1 * reviews, 50% 5 * reviews.
+
+    :param context:
+    :return:
+    """
     request = context['request']
     model = context['model']
 

@@ -10,8 +10,17 @@ star_border = '<i class="material-icons text-warning" style="font-size: {font_si
 
 @register.simple_tag
 def get_ratings(rating, font_size=24, empty_border=True):
+    """
+
+    Returns the html to render the correct icons for a given rating.
+
+    :param rating:
+    :param font_size:
+    :param empty_border:
+    :return:
+    """
     if rating is None:
-        return mark_safe('<small>No Reviews</small>')
+        return mark_safe(''.join((star_border.format(font_size=font_size))*5))
 
     html_ratings = ''
 
