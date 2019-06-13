@@ -11,6 +11,11 @@
             {{ form|crispy }}
             <button type="submit" class="btn btn-success">Save Review</button>
         </form>
+
+        {% if form.instance.pk is not None %}
+            <a class="btn btn-danger" href="{% url 'reviews:review_model_delete' pk=form.instance.pk %}">Delete</a>
+        {% endif %}
+
     </div>
 
 {% endblock %}
