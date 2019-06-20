@@ -5,12 +5,14 @@
 
 {% block title %}Model - {{ model.title }} - DatosInsights.com{% endblock %}
 
+
+
 {% block content %}
+
     <div class="container">
         {% display_full_banner %}
 
         <hr/>
-
 
         {#<a class="text-white" href="{% url 'profile_view' pk=model.user.id %}">{{ model.user.username }}</a>#}
         <div class="card border-0">
@@ -29,9 +31,9 @@
 
                             {% endif %}
                         </div>
-{#                        <a href="{% url 'subscriptions:subscription_model_list_view' model.id %}"#}
-{#                           class="btn btn-outline-dark">Subscription Details#}
-{#                        </a>#}
+                        {#                        <a href="{% url 'subscriptions:subscription_model_list_view' model.id %}"#}
+                        {#                           class="btn btn-outline-dark">Subscription Details#}
+                        {#                        </a>#}
                     </div>
                 {% endif %}
 

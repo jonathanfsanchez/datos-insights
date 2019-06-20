@@ -36,6 +36,16 @@ def model_view(request, pk, template_name='models/model_view.html'):
 
     return render(request, template_name, context=context)
 
+@login_required
+def model_delete(request, pk, template_name='models/'):
+    model = get_object_or_404(Model, pk=pk)
+    if request.POST and (request.user == model.user):
+        model.delete()
+        return redirect('models:model_view', pk)
+    elif request.POST:
+        return redirect('reviews:review_model_view', pk)
+    return render(request=request, template_name=template_name, context={'object': model})
+
 
 @login_required
 def model_create(request, template_name='models/model_form.html'):
