@@ -11,10 +11,17 @@
             {% for m in featured %}
 
                 <div class="card bg-light shadow mb-5" style="min-width: 18rem;">
-                    <div class="card-header">
-                        <h5 class="mb-0">
-                            <a class="text-dark" href="{% url 'models:model_view' m.id %}">{{ m.title }}</a>
-                        </h5>
+                    <div class="card-header d-flex">
+                      <div>
+                          <h5 class="mb-0">
+                              <a class="text-dark" href="{% url 'models:model_view' m.id %}">{{ m.title }}</a>
+                          </h5>
+                      </div>
+                          {% if m.third_party %}
+                            <div class="ml-auto">
+                              <span class="badge badge-dark badge-pill shadow-sm">Third Party</span>
+                            </div>
+                          {% endif %}
                     </div>
 
                     <div class="card-body bg-white">
