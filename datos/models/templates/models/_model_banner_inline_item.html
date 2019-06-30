@@ -4,9 +4,14 @@
 
 <div>
     <div class="d-inline-flex">
-        <a href="{% url 'models:model_view' pk=model.id %}"
-           class="text-decoration-none text-dark font-weight-bold h4 p-0 m-0">
-            {{ model.title }}</a>
+        <div class="h6">
+          <a href="{% url 'models:model_view' pk=model.id %}"
+             class="text-decoration-none text-dark font-weight-bold h4 p-0 m-0">
+              {{ model.title }}</a>
+          {% if model.third_party %}
+                <span class="badge badge-dark badge-pill shadow-sm">Third Party</span>
+          {% endif %}
+        </div>
 
     </div>
 

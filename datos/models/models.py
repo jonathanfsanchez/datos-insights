@@ -25,11 +25,13 @@ class Model(models.Model):
     is_private = models.BooleanField(default=False)
     cost = models.FloatField(blank=False, default=0.00,
                              validators=[MinValueValidator(0.00), ])
+    third_party = models.BooleanField(default=False)
+    version = models.TextField(blank=True, default='')
 
     views = models.PositiveIntegerField(editable=False, default=0)
     # ml_framework = models.CharField(max_length=2, blank=False, choices=FRAMEWORK_CHOICES)
 
-    weights_path = models.TextField()
+    url = models.TextField(blank=True, default='')
     user = models.ForeignKey(get_user_model(), models.DO_NOTHING, blank=False)
     datasets = models.ManyToManyField(Dataset, through='ModelDatasetRelations')
 

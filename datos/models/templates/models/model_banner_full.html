@@ -4,12 +4,15 @@
 
 <div class="jumbotron  bg-white text-dark  pt-0 pr-0 pb-3">
     <div class="d-flex">
-        <div class="">
-            <h1 class="pt-3 mb-0">
-                <a class="text-decoration-none text-dark font-weight-bold"
+        <div class="h6">
+            <div class="pt-3 mb-0">
+                <a class="text-decoration-none text-dark font-weight-bold h1"
                    href="{% url 'models:model_view' model.id %}">{{ model.title }}
                 </a>
-            </h1>
+                {% if model.third_party %}
+                      <span class="badge badge-dark badge-pill shadow-sm">Third Party</span>
+                {% endif %}
+            </div>
         </div>
         <div class="ml-auto">
             {% get_model_bookmark_state model=model%}
@@ -23,9 +26,11 @@
                     <span class="badge badge-secondary shadow-sm"
                           style="font-size: 12px">{{ model.modelreview_set.count }} Review{{ model.modelreview_set.count|pluralize }}</span>
         </a>
+        {% if not model.third_party %}
         <small><span class="badge badge-secondary shadow-sm"
                      style="font-size: 12px">{{ model.get_total_api_calls }} API Calls</span>
         </small>
+        {% endif %}
     </div>
 
     <div>
@@ -54,7 +59,7 @@
                 <a href="{% url 'models:model_update' model.id %}"
                    class="btn btn-sm btn-outline-dark d-flex align-items-center mx-3 shadow-sm">Edit
                     <i class="material-icons ml-2">edit</i></a>
-            {% else %}
+            {% elif not model.third_party %}
                 {% get_sub_unsub_btn model=model %}
             {% endif %}
 
