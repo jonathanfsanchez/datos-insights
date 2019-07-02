@@ -1,33 +1,38 @@
 {% extends 'base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Profile{% endblock %}
 
 {% block content %}
 
     <div class="container">
+        <div class="jumbotron bg-white text-dark border-0 py-3 mb-0">
+            <h1 class="display-6">{{ profile.username }}</h1>
+            <a href="{% url 'uploads_view' %}" class="btn badge badge-dark mr-2 shadow-sm">{{ num_subscribers }} subscribers</a>
+            <a href="{% url 'subscriptions:subscription_list_view' %}" class="btn badge badge-dark shadow-sm">{{ num_subscriptions }} subscriptions</a>
+        </div>
 
-        <div class="shadow card my-4">
-            <h2 class="card-header">{{ profile.username }}</h2>
+        <div class="card border-0">
             <div class="card-body">
-                <h5 class="card-title"></h5>
-                <p class="card-text">
-                <table class="table table-borderless">
-                    <tbody>
-                    <tr>
-                        <th scope="row">Email</th>
-                        <td>{{ profile.pk }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Upload Date</th>
-                        <td>{{ profile.first_name }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Last Modified Date</th>
-                        <td>{{ profile.last_name }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-                </p>
+                <ul class="list-group list-group-flush">
+                <ul class="list-group-item border-0">
+                    <b>Firstname:</b> {{ profile.first_name }}
+                    <span class="ml-3">
+                        <b>Lastname:</b> {{ profile.last_name }}
+                    </span>
+                </ul>
+                <ul class="list-group-item border-0">
+                    <b>Email:</b> {{ profile.email }}
+                </ul>
+                <ul class="list-group-item border-0">
+                    <b>Bio:</b> {{ profile.bio }}
+                </ul>
+                <ul class="list-group-item border-0">
+                    <b>Title:</b> {{ profile.title }}
+                    <span class="ml-3">
+                        <b>Company:</b> {{ profile.company }}
+                    </span>
+                </ul>
+            </ul>
             </div>
         </div>
     </div>

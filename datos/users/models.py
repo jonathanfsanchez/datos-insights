@@ -1,13 +1,22 @@
 from django.contrib.auth.models import AbstractUser
 
 
-# Create your models here.
 from django.db import models
 
 
 class DatosUser(AbstractUser):
 
+    # fields required for profile view
+    # TODO: avatar field with image
+    bio = models.TextField(blank=True)
+    title = models.TextField(blank=True)
+    company = models.TextField(blank=True)
+
     model_bookmarks = models.ManyToManyField('models.Model')
     dataset_bookmarks = models.ManyToManyField('datasets.Dataset')
-    # add additional fields in here
+
+    # for validating unique email addresses during auth
+    class Meta(object):
+        unique_together = ('email', )
+
     pass

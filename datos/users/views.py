@@ -26,7 +26,10 @@ def private_profile_view(request):
 
 def profile_view(request, pk, template_name="users/user_view.html"):
     datos_user = get_object_or_404(DatosUser, pk=pk)
-    return render(request=request, template_name=template_name, context={'profile': datos_user})
+
+    # TODO: fetch num subscribers and num subscriptions
+    context = {'profile': datos_user, 'num_subscribers': 8, 'num_subscriptions': 8}
+    return render(request=request, template_name=template_name, context=context)
 
 
 @login_required
