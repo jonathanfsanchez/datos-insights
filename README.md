@@ -4,13 +4,16 @@ This project explores [Django](https://www.djangoproject.com/), the python web f
 
 ## Applications
 
-| Applications  | Description |
-| ---           | ---         |
-| datasets      | Contains everything about datasets and their download |
-| models        | Contains everything about models and their deployment |
-| services      | Contains the services, action items on a datasets or models, that datos and other users provide, as well as those services a user offers |
-| subscriptions | Contains the subscriptions of users to a model, dataset |
-| reviews       | Contains reviews about users, models, datasets, services, groups |
+| Applications  | Description | State |
+| ---           | ---         | ---   |
+| billing       | Contains everything related to billing such as paypal integration and invoicing | **Active** |
+| datasets      | Contains everything about datasets and their download | Soon to be **Inactive** |
+| models        | Contains everything about models and their deployment | **Active** |
+| services      | Contains the services, action items on a datasets or models, that datos and other users provide, as well as those services a user offers | Inactive |
+| subscriptions | Contains the subscriptions of users to a model, dataset | **Active**
+| reviews       | Contains reviews about users, models, datasets, services, groups | **Active** |
+| tags          | TBD: Should contain everything that should be tagged and searchable | Inactive |
+| users         | Contains the extended User class for the datos system | **Active** |
 
 ## Requirements
 * `pip install django`
