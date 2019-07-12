@@ -19,6 +19,7 @@ This project explores [Django](https://www.djangoproject.com/), the python web f
 * `pip install django`
 * `pip install django-crispy-forms`
 * `pip install django-bootstrap4`
+* `pip install djangorestframework`
 
 **Note**: It is recommended to use a python environment.
 
