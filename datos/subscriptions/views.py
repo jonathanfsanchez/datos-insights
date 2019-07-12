@@ -5,10 +5,20 @@ from django.core.paginator import Paginator
 from django.forms import ModelForm
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
+from rest_framework.generics import CreateAPIView
 
 from models.models import Model
+from models.serializer import ModelApiCallSerializer
 from users.models import DatosUser
-from .models import DatasetSubscription, ModelSubscription
+from .models import DatasetSubscription, ModelSubscription, ModelApiCall
+
+
+# Function that the CLIENT API should be calling.
+# TODO: add user authentication?
+# TODO: Add a function to create a session for the client api connection?
+class ModelApiCallCreate(CreateAPIView):
+    model = ModelApiCall
+    serializer_class = ModelApiCallSerializer
 
 
 class ModelSubForm(ModelForm):
