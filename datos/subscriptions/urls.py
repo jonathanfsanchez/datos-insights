@@ -1,7 +1,7 @@
 from django.urls import path
 
 from subscriptions.views import subscription_model_create, \
-    subscription_model_update, subscription_list_view, subscription_model_list_view, subscription_dataset_view
+    subscription_model_update, subscription_list_view, subscription_model_list_view, ModelApiCallCreate
 
 app_name = 'subscriptions'
 
@@ -23,5 +23,8 @@ urlpatterns = [
     # the details of an atomic subscription - not needed
     # path('model/detail/<int:pk>/', subscription_model_view, name='subscription_model_view'),
     # path('dataset/detail/<int:pk>/', subscription_dataset_view, name='subscription_dataset_view'),
+
+    # CLIENT API ENDPOINT
+    path('model/api-call/', ModelApiCallCreate.as_view(), name='model_api_call_create')
 
 ]

@@ -1,10 +1,15 @@
+import random
+
 from django.contrib.auth import get_user_model
 from django.db import models
 
 
 class ModelApiCall(models.Model):
     inference_date_start = models.DateTimeField(editable=False, auto_now_add=True)
-    process_time_ms = models.FloatField(blank=False)
+
+    #TODO: remove the default value when the system can input process time
+    process_time_ms = models.FloatField(blank=False, default=random.uniform(0, 1))
+
     model_subscription = models.ForeignKey('subscriptions.ModelSubscription', models.DO_NOTHING, blank=False)
 
     # cold start - keep track of api calls that are required re-deployment(?)
